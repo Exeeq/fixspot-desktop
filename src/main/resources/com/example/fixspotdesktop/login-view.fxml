@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<!-- HBox principal: FORZAMOS crecimiento de ambas columnas -->
+<HBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.fixspotdesktop.ui.LoginController"
+      styleClass="split-root"
+      fillHeight="true" spacing="0"
+      prefWidth="960" prefHeight="560">
+
+    <!-- Columna izquierda (grafito) -->
+    <StackPane HBox.hgrow="ALWAYS" styleClass="split-left">
+        <children>
+            <VBox spacing="16" alignment="CENTER">
+                <children>
+                    <ImageView fitWidth="280" preserveRatio="true" smooth="true" cache="true">
+                        <image>
+                            <Image url="@images/fixspot-logo.png"/>
+                        </image>
+                    </ImageView>
+                    <Label text="Encuentra tu taller" styleClass="left-caption"/>
+                </children>
+            </VBox>
+        </children>
+        <padding>
+            <Insets top="24" right="24" bottom="24" left="24"/>
+        </padding>
+    </StackPane>
+
+    <!-- Columna derecha (morado) -->
+    <StackPane HBox.hgrow="ALWAYS" styleClass="split-right">
+        <children>
+            <VBox alignment="CENTER">
+                <children>
+
+                    <!-- Tarjeta del formulario (más ancha) -->
+                    <VBox spacing="12" styleClass="login-card" fillWidth="true"
+                          maxWidth="420" prefWidth="380">
+                        <children>
+                            <Label text="Iniciar sesión" styleClass="title"/>
+                            <Label text="Usa tus credenciales de Fixspot Admin" styleClass="subtitle"/>
+
+                            <TextField fx:id="usernameField" promptText="Usuario"
+                                       styleClass="input" maxWidth="Infinity"/>
+                            <PasswordField fx:id="passwordField" promptText="Contraseña"
+                                           styleClass="input" maxWidth="Infinity"/>
+
+                            <Button fx:id="loginButton" text="Ingresar"
+                                    onAction="#onLogin" defaultButton="true"
+                                    styleClass="primary-btn" maxWidth="Infinity"/>
+
+                            <Label fx:id="statusLabel" styleClass="status-error" wrapText="true"/>
+                        </children>
+                    </VBox>
+
+                </children>
+            </VBox>
+        </children>
+        <padding>
+            <Insets top="24" right="24" bottom="24" left="24"/>
+        </padding>
+    </StackPane>
+
+</HBox>

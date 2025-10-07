@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.fixspotdesktop.ui.UsersController"
+      spacing="16" prefWidth="980" prefHeight="600">
+
+    <!-- Barra superior: título + botón crear -->
+    <HBox spacing="12" alignment="CENTER_LEFT" styleClass="toolbar">
+        <children>
+            <Label text="ADMINISTRACIÓN DE USUARIOS" styleClass="home-heading"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="btnCreate" text="CREAR USUARIO" styleClass="primary-btn"/>
+        </children>
+        <padding><Insets top="8" right="8" bottom="8" left="8"/></padding>
+    </HBox>
+
+    <!-- Tabla -->
+    <TableView fx:id="tbl" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colId"          text="ID"                 prefWidth="60"/>
+            <TableColumn fx:id="colRun"         text="Run"                prefWidth="120"/>
+            <TableColumn fx:id="colUsername"    text="Nombre de usuario"  prefWidth="160"/>
+            <TableColumn fx:id="colNombre"      text="Nombre y apellido"  prefWidth="200"/>
+            <TableColumn fx:id="colCorreo"      text="Correo"             prefWidth="220"/>
+            <TableColumn fx:id="colDir"         text="Dirección"          prefWidth="200"/>
+            <TableColumn fx:id="colRol"         text="Rol Usuario"        prefWidth="150"/>
+            <TableColumn fx:id="colAcciones"    text="Acciones"           prefWidth="180"/>
+        </columns>
+    </TableView>
+
+</VBox>

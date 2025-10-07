@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Orientation?>
+
+<SplitPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:id="rootSplit"
+           fx:controller="com.example.fixspotdesktop.ui.HomeController"
+           orientation="HORIZONTAL"
+           dividerPositions="0.55"
+           prefWidth="980" prefHeight="600">
+
+    <!-- ITEM 1: IZQUIERDA (morado) -->
+    <items>
+        <!-- IZQUIERDA (morado) -->
+        <StackPane styleClass="home-left">
+            <children>
+                <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                            style="-fx-background-color: transparent; -fx-background: transparent;">
+                    <content>
+                        <!-- CENTRAR tarjetas y limitar ancho -->
+                        <StackPane alignment="TOP_CENTER" styleClass="menu-container">
+                            <children>
+                                <VBox fx:id="menuBox" spacing="18" alignment="TOP_CENTER"
+                                      fillWidth="true" prefWidth="640" maxWidth="720">
+                                    <children>
+                                        <Label text="PANEL DE ADMINISTRACIÓN" styleClass="home-heading"/>
+
+                                        <!-- Tarjeta Usuarios -->
+                                        <VBox spacing="10" styleClass="menu-card" onMouseClicked="#goUsers"
+                                              maxWidth="Infinity">
+                                            <children>
+                                                <ImageView fitWidth="56" preserveRatio="true">
+                                                    <image><Image url="@images/ic-users.png"/></image>
+                                                </ImageView>
+                                                <Label text="Gestión de usuarios" styleClass="menu-title"/>
+                                                <Label text="Crear, editar, activar/desactivar usuarios y asignar roles."
+                                                       styleClass="menu-desc" wrapText="true"/>
+                                                <Button text="Abrir" styleClass="primary-btn" maxWidth="Infinity"/>
+                                            </children>
+                                        </VBox>
+
+                                        <!-- Tarjeta Talleres -->
+                                        <VBox spacing="10" styleClass="menu-card" onMouseClicked="#goWorkshops"
+                                              maxWidth="Infinity">
+                                            <children>
+                                                <ImageView fitWidth="56" preserveRatio="true">
+                                                    <image><Image url="@images/ic-workshop.png"/></image>
+                                                </ImageView>
+                                                <Label text="Gestión de talleres mecánicos" styleClass="menu-title"/>
+                                                <Label text="Alta de talleres, servicios, marcas y estados operativos."
+                                                       styleClass="menu-desc" wrapText="true"/>
+                                                <Button text="Abrir" styleClass="primary-btn" maxWidth="Infinity"/>
+                                            </children>
+                                        </VBox>
+
+                                        <!-- Tarjeta Tickets -->
+                                        <VBox spacing="10" styleClass="menu-card" onMouseClicked="#goTickets"
+                                              maxWidth="Infinity">
+                                            <children>
+                                                <ImageView fitWidth="56" preserveRatio="true">
+                                                    <image><Image url="@images/ic-tickets.png"/></image>
+                                                </ImageView>
+                                                <Label text="Gestión de tickets" styleClass="menu-title"/>
+                                                <Label text="Recepción, priorización, asignación y seguimiento de tickets."
+                                                       styleClass="menu-desc" wrapText="true"/>
+                                                <Button text="Abrir" styleClass="primary-btn" maxWidth="Infinity"/>
+                                            </children>
+                                        </VBox>
+                                    </children>
+
+                                    <!-- padding interior -->
+                                    <padding>
+                                        <Insets top="28" right="28" bottom="28" left="28"/>
+                                    </padding>
+                                </VBox>
+                            </children>
+                        </StackPane>
+                    </content>
+                </ScrollPane>
+            </children>
+        </StackPane>
+
+        <!-- ITEM 2: DERECHA (grafito) -->
+        <StackPane styleClass="home-right">
+            <children>
+                <VBox spacing="18" alignment="CENTER">
+                    <children>
+                        <ImageView fitWidth="320" preserveRatio="true" smooth="true" cache="true">
+                            <image><Image url="@images/fixspot-logo.png"/></image>
+                        </ImageView>
+
+                        <Label text="FIXSPOT ADMINISTRACIÓN" styleClass="brand-title"/>
+                        <Label text="Administra usuarios, talleres y tickets desde una sola aplicación."
+                               styleClass="brand-sub" wrapText="true" maxWidth="420"/>
+
+                        <Separator maxWidth="380"/>
+                        <Label fx:id="lblUser" text="Sesión activa: admin" styleClass="brand-meta"/>
+
+
+                        <Button text="Cerrar sesión" onAction="#onLogout" styleClass="ghost-btn"/>
+                    </children>
+                    <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
+                </VBox>
+            </children>
+        </StackPane>
+    </items>
+
+</SplitPane>
