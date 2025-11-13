@@ -100,3 +100,80 @@
 .btn-edit { -fx-background-color: #1e1e1e; }
 .btn-delete { -fx-background-color: #d43c3c; }
 
+/* Barra superior con título y botón */
+.toolbar {
+    -fx-background-color: #6A00FF;
+    -fx-padding: 12;
+    -fx-alignment: center;
+}
+
+.home-heading {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.primary-btn-2 {
+    -fx-background-color: #9b50ff;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+}
+
+.ghost-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #6A00FF;
+    -fx-border-color: #6A00FF;
+    -fx-border-radius: 10px;
+    -fx-padding: 8px 15px;
+    -fx-font-weight: bold;
+}
+
+.ghost-btn:hover {
+    -fx-background-color: rgba(106, 0, 255, 0.1);
+}
+
+.ghost-btn:pressed {
+    -fx-background-color: rgba(106, 0, 255, 0.3);
+}
+
+/* Tabla y columnas */
+.table-view {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0.2, 0, 6);
+    -fx-border-radius: 12px;
+}
+
+.table-column {
+    -fx-font-size: 14px;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #f1f1f1;
+}
+
+.table-row-cell:filled:hover {
+    -fx-background-color: #f1f1f1;
+}
+
+/* Responsivo para pantallas pequeñas */
+@media screen and (max-width: 900px) {
+    .home-heading {
+        -fx-font-size: 18px;
+    }
+
+    .primary-btn {
+        -fx-padding: 8px 16px;
+    }
+
+    .ghost-btn {
+        -fx-padding: 6px 12px;
+    }
+}
+
+/* Estilos del formulario de crear usuario */
+
+
+

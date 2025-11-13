@@ -96,10 +96,10 @@ public class ApiClient {
                 return json.createObjectNode();
             }
 
-            throw new RuntimeException(pickErrorMessage(code, bodyText, "Credenciales inválidas o cuenta inactiva."));
+            throw new RuntimeException("Error API (" + code + "): " + bodyText);
 
         } catch (RuntimeException e) {
-            throw e; // ya viene sanitizado
+            throw e;
         } catch (Exception e) {
             throw new RuntimeException("No hay conexión con el servidor.");
         }
@@ -136,7 +136,7 @@ public class ApiClient {
         }
     }
 
-    // ---------- PUT (opcional, por si lo necesitas) ----------
+    // ---------- PUT ----------
     public static JsonNode putJson(String url, Object body, String bearerToken) {
         try {
             String payload = json.writeValueAsString(body);
@@ -155,7 +155,7 @@ public class ApiClient {
             if (code >= 200 && code < 300) {
                 JsonNode ok = safeParse(bodyText);
                 if (ok != null) return ok;
-                return json.createObjectNode(); // PUT 204 sin body
+                return json.createObjectNode();
             }
 
             throw new RuntimeException(pickErrorMessage(code, bodyText, "No autorizado."));

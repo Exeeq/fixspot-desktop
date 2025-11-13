@@ -18,4 +18,6 @@ module com.example.fixspotdesktop {
     opens com.example.fixspotdesktop to javafx.fxml;
 
     exports com.example.fixspotdesktop;
+    exports com.example.fixspotdesktop.net;
+    exports com.example.fixspotdesktop.ui;
 }

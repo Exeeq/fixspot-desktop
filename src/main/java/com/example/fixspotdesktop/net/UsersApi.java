@@ -4,6 +4,7 @@ import com.example.fixspotdesktop.auth.AuthService;
 import com.example.fixspotdesktop.net.ApiClient;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,15 @@ public class UsersApi {
             for (JsonNode u : n.get("results")) out.add(UserDTO.from(u));
         }
         return out;
+    }
+
+    public static void createUser(Map<String, String> newUser) {
+        JsonNode response = ApiClient.postJson(BASE, newUser, AuthService.getAccessToken());
+
+    }
+
+    public static void updateUser(int id, Map<String, String> body) {
+        ApiClient.patchJson(BASE + id + "/", body, AuthService.getAccessToken());
     }
 
     public static void deleteById(int id) {

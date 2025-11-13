@@ -3,32 +3,63 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.fixspotdesktop.ui.UsersController"
-      spacing="16" prefWidth="980" prefHeight="600">
+      spacing="16"
+      prefWidth="980"
+      prefHeight="600">
 
-    <!-- Barra superior: título + botón crear -->
+    <!-- Barra superior: título + botones de acción -->
     <HBox spacing="12" alignment="CENTER_LEFT" styleClass="toolbar">
         <children>
             <Label text="ADMINISTRACIÓN DE USUARIOS" styleClass="home-heading"/>
             <Region HBox.hgrow="ALWAYS"/>
-            <Button fx:id="btnCreate" text="CREAR USUARIO" styleClass="primary-btn"/>
+            <Button fx:id="btnCreate"
+                    text="CREAR USUARIO"
+                    styleClass="primary-btn-2"
+                    onAction="#onOpenCreate"/>
+            <Button fx:id="btnLogout"
+                    text="Cerrar sesión"
+                    styleClass="ghost-btn"
+                    onAction="#onLogout"/>
         </children>
-        <padding><Insets top="8" right="8" bottom="8" left="8"/></padding>
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </padding>
     </HBox>
 
-    <!-- Tabla -->
-    <TableView fx:id="tbl" VBox.vgrow="ALWAYS">
-        <columns>
-            <TableColumn fx:id="colId"          text="ID"                 prefWidth="60"/>
-            <TableColumn fx:id="colRun"         text="Run"                prefWidth="120"/>
-            <TableColumn fx:id="colUsername"    text="Nombre de usuario"  prefWidth="160"/>
-            <TableColumn fx:id="colNombre"      text="Nombre y apellido"  prefWidth="200"/>
-            <TableColumn fx:id="colCorreo"      text="Correo"             prefWidth="220"/>
-            <TableColumn fx:id="colDir"         text="Dirección"          prefWidth="200"/>
-            <TableColumn fx:id="colRol"         text="Rol Usuario"        prefWidth="150"/>
-            <TableColumn fx:id="colAcciones"    text="Acciones"           prefWidth="180"/>
-        </columns>
-    </TableView>
+    <!-- Contenedor tabla -->
+    <VBox VBox.vgrow="ALWAYS">
+        <padding>
+            <Insets top="0" right="16" bottom="16" left="16"/>
+        </padding>
 
+        <TableView fx:id="tbl" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colId"       text="ID"                 prefWidth="60"/>
+                <TableColumn fx:id="colRun"      text="Run"                prefWidth="120"/>
+                <TableColumn fx:id="colUsername" text="Nombre de usuario"  prefWidth="160"/>
+                <TableColumn fx:id="colNombre" text="Primer nombre" />
+                <TableColumn fx:id="colApPaterno" text="Apellido paterno" />
+                <TableColumn fx:id="colCorreo"   text="Correo"             prefWidth="220"/>
+                <TableColumn fx:id="colDir"      text="Dirección"          prefWidth="200"/>
+                <TableColumn fx:id="colComuna" text="Comuna" />
+                <TableColumn fx:id="colRol" text="Rol" />
+                <TableColumn fx:id="colAcciones" text="Acciones"           prefWidth="180"/>
+            </columns>
+        </TableView>
+
+        <HBox spacing="12" alignment="CENTER_RIGHT">
+            <children>
+                <Button fx:id="btnBack"
+                        text="Volver al menú"
+                        styleClass="ghost-btn"
+                        onAction="#onBack"/>
+            </children>
+            <padding>
+                <Insets top="10" right="0" bottom="0" left="0"/>
+            </padding>
+        </HBox>
+    </VBox>
 </VBox>

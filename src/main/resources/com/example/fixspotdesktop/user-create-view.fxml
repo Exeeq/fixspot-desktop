@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.fixspotdesktop.ui.CreateUserController">
+
+    <!-- Barra superior -->
+    <top>
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="toolbar">
+            <children>
+                <Label text="NUEVO USUARIO" styleClass="home-heading"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Volver al listado"
+                        styleClass="ghost-btn"
+                        onAction="#onCancel"/>
+            </children>
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+        </HBox>
+    </top>
+
+    <!-- CONTENIDO CENTRAL -->
+    <center>
+        <ScrollPane fitToWidth="true" pannable="true" hbarPolicy="NEVER">
+            <content>
+                <VBox alignment="TOP_CENTER" spacing="20">
+                    <padding>
+                        <Insets top="30" bottom="30" left="20" right="20"/>
+                    </padding>
+
+                    <!-- CARD DEL FORMULARIO -->
+                    <VBox spacing="16" maxWidth="520" styleClass="card">
+                        <padding>
+                            <Insets top="28" right="28" bottom="28" left="28"/>
+                        </padding>
+
+                        <Label text="DATOS DEL USUARIO" styleClass="section-title"/>
+
+                        <!-- BLOQUE DE CAMPOS -->
+                        <VBox spacing="12">
+
+                            <TextField fx:id="txtUsername" promptText="Nombre de usuario*" styleClass="input"/>
+                            <TextField fx:id="txtRun"       promptText="RUN*"                styleClass="input"/>
+                            <TextField fx:id="txtCorreo"    promptText="Correo electrónico*" styleClass="input"/>
+                            <TextField fx:id="txtNombre"    promptText="Primer Nombre*"      styleClass="input"/>
+                            <TextField fx:id="txtApellido"  promptText="Apellido Paterno*"   styleClass="input"/>
+                            <TextField fx:id="txtDireccion" promptText="Dirección*"          styleClass="input"/>
+
+                            <ComboBox fx:id="cbRol"     promptText="Rol*"     styleClass="input"/>
+                            <ComboBox fx:id="cbComuna"  promptText="Comuna*"  styleClass="input"/>
+
+                            <PasswordField fx:id="txtPassword"
+                                           promptText="Contraseña*"
+                                           styleClass="input"/>
+                            <PasswordField fx:id="txtConfirmPassword"
+                                           promptText="Confirmar Contraseña*"
+                                           styleClass="input"/>
+
+                        </VBox>
+
+                        <!-- BOTONES -->
+                        <HBox spacing="14" alignment="CENTER_RIGHT">
+                            <children>
+                                <Button text="Cancelar"
+                                        styleClass="ghost-btn"
+                                        onAction="#onCancel"/>
+                                <Button text="Guardar usuario"
+                                        styleClass="primary-btn-2"
+                                        onAction="#onSave"/>
+                            </children>
+                        </HBox>
+
+                    </VBox>
+
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

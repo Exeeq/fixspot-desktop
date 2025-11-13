@@ -113,6 +113,10 @@ public class AuthService {
         displayName = null;
     }
 
+    public static void logout() {
+        clearSession();
+    }
+
     // Getters
     public static String getAccessToken() { return accessToken; }
     public static String getUsername()    { return username; }

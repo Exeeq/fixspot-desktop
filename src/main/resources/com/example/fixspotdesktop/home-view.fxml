@@ -16,7 +16,6 @@
 
     <!-- ITEM 1: IZQUIERDA (morado) -->
     <items>
-        <!-- IZQUIERDA (morado) -->
         <StackPane styleClass="home-left">
             <children>
                 <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
@@ -31,8 +30,7 @@
                                         <Label text="PANEL DE ADMINISTRACIÓN" styleClass="home-heading"/>
 
                                         <!-- Tarjeta Usuarios -->
-                                        <VBox spacing="10" styleClass="menu-card" onMouseClicked="#goUsers"
-                                              maxWidth="Infinity">
+                                        <VBox spacing="10" styleClass="menu-card" maxWidth="Infinity">
                                             <children>
                                                 <ImageView fitWidth="56" preserveRatio="true">
                                                     <image><Image url="@images/ic-users.png"/></image>
@@ -40,13 +38,12 @@
                                                 <Label text="Gestión de usuarios" styleClass="menu-title"/>
                                                 <Label text="Crear, editar, activar/desactivar usuarios y asignar roles."
                                                        styleClass="menu-desc" wrapText="true"/>
-                                                <Button text="Abrir" styleClass="primary-btn" maxWidth="Infinity"/>
+                                                <Button text="Abrir" styleClass="primary-btn" maxWidth="Infinity" onAction="#goUsers"/>
                                             </children>
                                         </VBox>
 
                                         <!-- Tarjeta Talleres -->
-                                        <VBox spacing="10" styleClass="menu-card" onMouseClicked="#goWorkshops"
-                                              maxWidth="Infinity">
+                                        <VBox spacing="10" styleClass="menu-card" maxWidth="Infinity">
                                             <children>
                                                 <ImageView fitWidth="56" preserveRatio="true">
                                                     <image><Image url="@images/ic-workshop.png"/></image>
@@ -54,13 +51,12 @@
                                                 <Label text="Gestión de talleres mecánicos" styleClass="menu-title"/>
                                                 <Label text="Alta de talleres, servicios, marcas y estados operativos."
                                                        styleClass="menu-desc" wrapText="true"/>
-                                                <Button text="Abrir" styleClass="primary-btn" maxWidth="Infinity"/>
+                                                <Button text="Abrir" styleClass="primary-btn" maxWidth="Infinity" onAction="#goWorkshops"/>
                                             </children>
                                         </VBox>
 
                                         <!-- Tarjeta Tickets -->
-                                        <VBox spacing="10" styleClass="menu-card" onMouseClicked="#goTickets"
-                                              maxWidth="Infinity">
+                                        <VBox spacing="10" styleClass="menu-card" maxWidth="Infinity">
                                             <children>
                                                 <ImageView fitWidth="56" preserveRatio="true">
                                                     <image><Image url="@images/ic-tickets.png"/></image>
@@ -68,14 +64,14 @@
                                                 <Label text="Gestión de tickets" styleClass="menu-title"/>
                                                 <Label text="Recepción, priorización, asignación y seguimiento de tickets."
                                                        styleClass="menu-desc" wrapText="true"/>
-                                                <Button text="Abrir" styleClass="primary-btn" maxWidth="Infinity"/>
+                                                <Button text="Abrir" styleClass="primary-btn" maxWidth="Infinity" onAction="#goTickets"/>
                                             </children>
                                         </VBox>
                                     </children>
 
                                     <!-- padding interior -->
                                     <padding>
-                                        <Insets top="28" right="28" bottom="28" left="28"/>
+                                        <Insets top="10" right="10" bottom="10" left="10"/>
                                     </padding>
                                 </VBox>
                             </children>
@@ -101,10 +97,9 @@
                         <Separator maxWidth="380"/>
                         <Label fx:id="lblUser" text="Sesión activa: admin" styleClass="brand-meta"/>
 
-
                         <Button text="Cerrar sesión" onAction="#onLogout" styleClass="ghost-btn"/>
                     </children>
-                    <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
+                    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
                 </VBox>
             </children>
         </StackPane>

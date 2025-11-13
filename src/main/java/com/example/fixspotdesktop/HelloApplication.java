@@ -1,18 +1,17 @@
 package com.example.fixspotdesktop;
 
-import com.example.fixspotdesktop.auth.AuthService;
+import com.example.fixspotdesktop.ui.CreateUserController;
+import com.example.fixspotdesktop.ui.HomeController;
 import com.example.fixspotdesktop.ui.LoginController;
+import com.example.fixspotdesktop.ui.UsersController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import com.example.fixspotdesktop.ui.UsersController;
+import javafx.stage.Stage;
+import com.example.fixspotdesktop.net.UserDTO;
+import com.example.fixspotdesktop.ui.EditUserController;
 
 public class HelloApplication extends Application {
     private Stage stage;
@@ -48,12 +47,12 @@ public class HelloApplication extends Application {
 
     public void showHome() {
         try {
-            var fx = new javafx.fxml.FXMLLoader(getClass().getResource("home-view.fxml"));
+            FXMLLoader fx = new FXMLLoader(getClass().getResource("home-view.fxml"));
             Parent root = fx.load();
-            var c = (com.example.fixspotdesktop.ui.HomeController) fx.getController();
+            HomeController c = fx.getController();
             c.setApp(this);
 
-            var scene = new javafx.scene.Scene(root, 960, 600);
+            Scene scene = new Scene(root, 960, 600);
             scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
             stage.setTitle("Fixspot – Inicio");
             stage.setScene(scene);
@@ -64,27 +63,76 @@ public class HelloApplication extends Application {
         }
     }
 
-    // Stubs para cada sección (por ahora placeholders)
     public void openUsers() {
         try {
             FXMLLoader fx = new FXMLLoader(getClass().getResource("users-view.fxml"));
             Parent root = fx.load();
             UsersController c = fx.getController();
             c.setApp(this);
+
             Scene sc = new Scene(root, 980, 600);
             sc.getStylesheets().add(getClass().getResource("/com/example/fixspotdesktop/styles.css").toExternalForm());
+            stage.setTitle("Fixspot – Usuarios");
             stage.setScene(sc);
+            stage.centerOnScreen();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    public void openCreateUser() {
+        try {
+            FXMLLoader fx = new FXMLLoader(getClass().getResource("user-create-view.fxml"));
+            Parent root = fx.load();
+            CreateUserController c = fx.getController();
+            c.setApp(this);
+
+            Scene sc = new Scene(root, 800, 520);
+            sc.getStylesheets().add(getClass().getResource("/com/example/fixspotdesktop/styles.css").toExternalForm());
+            stage.setTitle("Fixspot – Nuevo usuario");
+            stage.setScene(sc);
+            stage.centerOnScreen();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "No se pudo cargar el formulario de usuario.").showAndWait();
+            e.printStackTrace();
+        }
+    }
+
+    public void openEditUser(UserDTO user) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("edit-user-view.fxml"));
+            Parent root = loader.load();
+
+            EditUserController controller = loader.getController();
+            controller.setApp(this);
+            controller.loadUser(user);
+
+            Scene sc = new Scene(root);
+
+            sc.getStylesheets().add(
+                    getClass().getResource("/com/example/fixspotdesktop/styles.css").toExternalForm()
+            );
+
+            stage.setTitle("Fixspot – Editar usuario");
+            stage.setScene(sc);
+            stage.centerOnScreen();
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void openWorkshops() {
         Alert a = new Alert(Alert.AlertType.INFORMATION, "Gestión de talleres (próximo módulo)");
-        a.setHeaderText(null); a.showAndWait();
+        a.setHeaderText(null);
+        a.showAndWait();
     }
+
     public void openTickets() {
         Alert a = new Alert(Alert.AlertType.INFORMATION, "Gestión de tickets (próximo módulo)");
-        a.setHeaderText(null); a.showAndWait();
+        a.setHeaderText(null);
+        a.showAndWait();
     }
 
     public static void main(String[] args) { launch(); }

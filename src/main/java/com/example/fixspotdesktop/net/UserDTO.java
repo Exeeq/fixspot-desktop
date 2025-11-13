@@ -7,14 +7,15 @@ public record UserDTO(
         String run,
         String username,
         String pnombre,
-        String ap_paterno,
+        String apPaterno,
         String correo,
         String direccion,
         int idRol,
+        int idComuna,
         boolean isActive
 ) {
     public String nombreCompleto() {
-        String n = ((pnombre == null ? "" : pnombre) + " " + (ap_paterno == null ? "" : ap_paterno)).trim();
+        String n = ((pnombre == null ? "" : pnombre) + " " + (apPaterno == null ? "" : apPaterno)).trim();
         return n.isBlank() ? username : n;
     }
 
@@ -25,10 +26,10 @@ public record UserDTO(
                 n.path("username").asText(""),
                 n.path("pnombre").asText(""),
                 n.path("ap_paterno").asText(""),
-                // tu API usa "correo" para email; ajusta si fuera "email"
                 n.path("correo").asText(n.path("email").asText("")),
                 n.path("direccion").asText(""),
                 n.path("idRol").asInt(0),
+                n.path("idComuna").asInt(0),
                 n.path("is_active").asBoolean(true)
         );
     }
