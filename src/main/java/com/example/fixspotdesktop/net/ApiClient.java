@@ -92,11 +92,10 @@ public class ApiClient {
             if (code >= 200 && code < 300) {
                 JsonNode ok = safeParse(bodyText);
                 if (ok != null) return ok;
-                // algunos endpoints devuelven 204/201 sin body
                 return json.createObjectNode();
             }
 
-            throw new RuntimeException("Error API (" + code + "): " + bodyText);
+            throw new RuntimeException("Error: " + bodyText);
 
         } catch (RuntimeException e) {
             throw e;

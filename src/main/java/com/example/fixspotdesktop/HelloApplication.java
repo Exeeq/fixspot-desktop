@@ -4,16 +4,20 @@ import com.example.fixspotdesktop.ui.CreateUserController;
 import com.example.fixspotdesktop.ui.HomeController;
 import com.example.fixspotdesktop.ui.LoginController;
 import com.example.fixspotdesktop.ui.UsersController;
+import com.example.fixspotdesktop.ui.EditUserController;
+import com.example.fixspotdesktop.ui.CreateWorkshopController;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+
 import com.example.fixspotdesktop.net.UserDTO;
-import com.example.fixspotdesktop.ui.EditUserController;
 
 public class HelloApplication extends Application {
+
     private Stage stage;
 
     @Override
@@ -22,6 +26,37 @@ public class HelloApplication extends Application {
         showLogin();
     }
 
+    // =========================================================
+    // 🔹 Método genérico para cargar cualquier escena (corregido)
+    // =========================================================
+    public void loadScene(String fxml, java.util.function.Consumer<Object> controllerConsumer) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+            Parent root = loader.load();
+
+            // Obtener controller e inyectarlo
+            Object controller = loader.getController();
+            controllerConsumer.accept(controller);
+
+            // Crear escena con CSS
+            Scene sc = new Scene(root);
+            sc.getStylesheets().add(
+                    getClass().getResource("/com/example/fixspotdesktop/styles.css").toExternalForm()
+            );
+
+            stage.setScene(sc);
+            stage.centerOnScreen();
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "No se pudo cargar: " + fxml).showAndWait();
+        }
+    }
+
+    // =========================================================
+    // 🔹 LOGIN
+    // =========================================================
     public void showLogin() {
         try {
             FXMLLoader fx = new FXMLLoader(getClass().getResource("login-view.fxml"));
@@ -45,6 +80,9 @@ public class HelloApplication extends Application {
         }
     }
 
+    // =========================================================
+    // 🔹 HOME
+    // =========================================================
     public void showHome() {
         try {
             FXMLLoader fx = new FXMLLoader(getClass().getResource("home-view.fxml"));
@@ -63,6 +101,9 @@ public class HelloApplication extends Application {
         }
     }
 
+    // =========================================================
+    // 🔹 USUARIOS
+    // =========================================================
     public void openUsers() {
         try {
             FXMLLoader fx = new FXMLLoader(getClass().getResource("users-view.fxml"));
@@ -108,7 +149,6 @@ public class HelloApplication extends Application {
             controller.loadUser(user);
 
             Scene sc = new Scene(root);
-
             sc.getStylesheets().add(
                     getClass().getResource("/com/example/fixspotdesktop/styles.css").toExternalForm()
             );
@@ -123,12 +163,59 @@ public class HelloApplication extends Application {
         }
     }
 
+    // =========================================================
+    // 🔹 TALLERES
+    // =========================================================
     public void openWorkshops() {
-        Alert a = new Alert(Alert.AlertType.INFORMATION, "Gestión de talleres (próximo módulo)");
-        a.setHeaderText(null);
-        a.showAndWait();
+        try {
+            FXMLLoader fx = new FXMLLoader(getClass().getResource("workshops-view.fxml"));
+            Parent root = fx.load();
+
+            com.example.fixspotdesktop.ui.WorkshopsController c = fx.getController();
+            c.setApp(this);
+
+            Scene sc = new Scene(root, 980, 600);
+            sc.getStylesheets().add(
+                    getClass().getResource("/com/example/fixspotdesktop/styles.css").toExternalForm()
+            );
+
+            stage.setTitle("Fixspot – Talleres mecánicos");
+            stage.setScene(sc);
+            stage.centerOnScreen();
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "No se pudo cargar workshops-view.fxml").showAndWait();
+        }
     }
 
+    // =========================================================
+    // 🔹 CREAR TALLER (corregido + ruta correcta)
+    // =========================================================
+    public void openCreateWorkshop() {
+        try {
+            FXMLLoader fx = new FXMLLoader(getClass().getResource("workshop-create-view.fxml"));
+            Parent root = fx.load();
+            CreateWorkshopController c = fx.getController();
+            c.setApp(this);
+
+            Scene sc = new Scene(root, 980, 700);
+            sc.getStylesheets().add(getClass().getResource("/com/example/fixspotdesktop/styles.css").toExternalForm());
+
+            stage.setTitle("Fixspot – Crear taller");
+            stage.setScene(sc);
+            stage.centerOnScreen();
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "No se pudo cargar el formulario de creación de taller.").showAndWait();
+        }
+    }
+
+    // =========================================================
+    // 🔹 Tickets (módulo futuro)
+    // =========================================================
     public void openTickets() {
         Alert a = new Alert(Alert.AlertType.INFORMATION, "Gestión de tickets (próximo módulo)");
         a.setHeaderText(null);

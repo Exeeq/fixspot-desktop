@@ -117,6 +117,25 @@ public class CreateUserController {
             return;
         }
 
+        // ===== VALIDACIÓN RUN LOCAL =====
+        if (!isValidRut(run)) {
+            showError("El RUN ingresado no es válido. Debe tener formato 12345678-9.");
+            return;
+        }
+
+        // Validación básica frontend
+        if (username.length() < 3) {
+            showError("El nombre de usuario debe tener al menos 3 caracteres.");
+            return;
+        }
+
+        if (!correo.contains("@")) {
+            showError("El correo no es válido.");
+            return;
+        }
+
+
+
         Map<String, String> newUser = Map.of(
                 "username",   username,
                 "run",        run,
@@ -134,7 +153,7 @@ public class CreateUserController {
             showSuccess("Usuario creado exitosamente.");
             app.openUsers(); // Vuelve al listado
         } catch (Exception e) {
-            showError("Error al crear el usuario: " + e.getMessage());
+            showError(e.getMessage());
         }
     }
 
@@ -145,6 +164,16 @@ public class CreateUserController {
 
     // Helpers
     private void showError(String msg) {
+        // Intenta limpiar errores JSON de DRF
+        if (msg.contains("{")) {
+            msg = msg.replace("{", "")
+                    .replace("}", "")
+                    .replace("[", "")
+                    .replace("]", "")
+                    .replace("\"", "")
+                    .replace(":", ": ");
+        }
+
         Alert a = new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK);
         a.setHeaderText(null);
         a.showAndWait();
@@ -154,6 +183,47 @@ public class CreateUserController {
         Alert a = new Alert(Alert.AlertType.INFORMATION, msg, ButtonType.OK);
         a.setHeaderText(null);
         a.showAndWait();
+    }
+
+    // VALIDACIÓN RUN CHILENO
+    private boolean isValidRut(String rut) {
+        if (rut == null || rut.isEmpty()) return false;
+
+        rut = rut.replace(".", "").replace(" ", "").toUpperCase();
+
+        if (!rut.contains("-")) return false;
+
+        String[] partes = rut.split("-");
+        if (partes.length != 2) return false;
+
+        String cuerpo = partes[0];
+        String dv = partes[1];
+
+        if (!cuerpo.matches("\\d+")) return false;
+
+        int suma = 0;
+        int factor = 2;
+
+        for (int i = cuerpo.length() - 1; i >= 0; i--) {
+            int num = Character.getNumericValue(cuerpo.charAt(i));
+            suma += num * factor;
+            factor++;
+            if (factor > 7) factor = 2;
+        }
+
+        int resto = suma % 11;
+        int dvCalc = 11 - resto;
+        String dvEsperado;
+
+        if (dvCalc == 11) {
+            dvEsperado = "0";
+        } else if (dvCalc == 10) {
+            dvEsperado = "K";
+        } else {
+            dvEsperado = String.valueOf(dvCalc);
+        }
+
+        return dvEsperado.equalsIgnoreCase(dv);
     }
 }
 

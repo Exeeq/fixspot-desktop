@@ -32,7 +32,7 @@ application {
 
 javafx {
     version = "21.0.6"
-    modules = listOf("javafx.controls", "javafx.fxml")
+    modules = listOf("javafx.controls", "javafx.fxml", "javafx.web")
 }
 
 dependencies {
@@ -51,6 +51,9 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:2.17.2")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.17.2")
     implementation("com.fasterxml.jackson.core:jackson-core:2.17.2")
+
+    implementation("org.openjfx:javafx-web:21")
+    implementation("org.openjfx:javafx-media:21")
 }
 
 tasks.withType<Test> {

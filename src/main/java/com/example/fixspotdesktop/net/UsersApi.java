@@ -23,6 +23,11 @@ public class UsersApi {
         return out;
     }
 
+    public static UserDTO getById(int id) {
+        JsonNode n = ApiClient.getJson(BASE + id + "/", AuthService.getAccessToken());
+        return UserDTO.from(n);
+    }
+
     public static void createUser(Map<String, String> newUser) {
         JsonNode response = ApiClient.postJson(BASE, newUser, AuthService.getAccessToken());
 

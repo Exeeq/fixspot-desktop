@@ -80,6 +80,7 @@ public class EditUserController {
             return;
         }
 
+
         Map<String, String> body = Map.of(
                 "username",   txtUsername.getText(),
                 "correo",     txtCorreo.getText(),
@@ -100,6 +101,16 @@ public class EditUserController {
     }
 
     private void showError(String msg) {
+        // Intenta limpiar errores JSON de DRF
+        if (msg.contains("{")) {
+            msg = msg.replace("{", "")
+                    .replace("}", "")
+                    .replace("[", "")
+                    .replace("]", "")
+                    .replace("\"", "")
+                    .replace(":", ": ");
+        }
+
         Alert a = new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK);
         a.setHeaderText(null);
         a.showAndWait();

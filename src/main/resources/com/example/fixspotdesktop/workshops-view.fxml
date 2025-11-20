@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.fixspotdesktop.ui.WorkshopsController"
+      spacing="16"
+      prefWidth="980"
+      prefHeight="600">
+
+    <!-- Barra superior -->
+    <HBox spacing="12" alignment="CENTER_LEFT" styleClass="toolbar">
+        <children>
+            <Label text="ADMINISTRACIÓN DE TALLERES" styleClass="home-heading"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="btnCreate"
+                    text="CREAR TALLER"
+                    styleClass="primary-btn-2"
+                    onAction="#onOpenCreate"/>
+            <Button fx:id="btnLogout"
+                    text="Cerrar sesión"
+                    styleClass="ghost-btn"
+                    onAction="#onLogout"/>
+        </children>
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </padding>
+    </HBox>
+
+    <!-- Tabla -->
+    <VBox VBox.vgrow="ALWAYS">
+        <padding>
+            <Insets top="0" right="16" bottom="16" left="16"/>
+        </padding>
+
+        <TableView fx:id="tbl" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+                <TableColumn fx:id="colEncargado" text="Encargado del taller" prefWidth="160"/>
+                <TableColumn fx:id="colNombre" text="Nombre del taller" prefWidth="140"/>
+                <TableColumn fx:id="colTelefono" text="Teléfono" prefWidth="120"/>
+                <TableColumn fx:id="colDireccion" text="Dirección" prefWidth="260"/>
+                <TableColumn fx:id="colComuna" text="Comuna" prefWidth="120"/>
+                <TableColumn fx:id="colAcciones" text="Acciones" prefWidth="180"/>
+            </columns>
+        </TableView>
+
+        <HBox spacing="12" alignment="CENTER_RIGHT">
+            <children>
+                <Button fx:id="btnBack"
+                        text="Volver al menú"
+                        styleClass="ghost-btn"
+                        onAction="#onBack"/>
+            </children>
+        </HBox>
+    </VBox>
+
+</VBox>
