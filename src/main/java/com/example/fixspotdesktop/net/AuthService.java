@@ -117,6 +117,48 @@ public class AuthService {
         clearSession();
     }
 
+    public static boolean refreshAccessToken() {
+        if (refreshToken == null || refreshToken.isBlank()) {
+            lastError = "No hay refresh token disponible.";
+            return false;
+        }
+
+        try {
+            JsonNode node = ApiClient.postJson(
+                    REFRESH_URL,
+                    Map.of("refresh", refreshToken),
+                    null
+            );
+
+            if (!node.hasNonNull("access")) {
+                lastError = "No se pudo refrescar el token.";
+                return false;
+            }
+
+            accessToken = node.get("access").asText();
+            return true;
+
+        } catch (Exception e) {
+            lastError = "Error al refrescar token: " + e.getMessage();
+            return false;
+        }
+    }
+
+    public static String ensureValidToken() {
+        // Intentar usar accessToken actual
+        if (accessToken != null && !accessToken.isBlank()) {
+            return accessToken;
+        }
+
+        // Token vacío → intentar refrescar
+        if (refreshAccessToken()) {
+            return accessToken;
+        }
+
+        // Último recurso
+        throw new RuntimeException("Token inválido o expirado. Por favor inicia sesión nuevamente.");
+    }
+
     // Getters
     public static String getAccessToken() { return accessToken; }
     public static String getUsername()    { return username; }

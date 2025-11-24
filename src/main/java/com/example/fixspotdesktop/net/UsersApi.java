@@ -4,6 +4,7 @@ import com.example.fixspotdesktop.auth.AuthService;
 import com.example.fixspotdesktop.net.ApiClient;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,21 @@ public class UsersApi {
             for (JsonNode u : n.get("results")) out.add(UserDTO.from(u));
         }
         return out;
+    }
+
+    public static Map<Integer, String> getMap() {
+        Map<Integer, String> m = new HashMap<>();
+        try {
+            JsonNode n = com.example.fixspotdesktop.net.ApiClient.getJson(BASE, com.example.fixspotdesktop.auth.AuthService.getAccessToken());
+            if (n != null && n.isArray()) {
+                for (JsonNode r : n) {
+                    int id = r.path("id").asInt(r.path("id").asInt());
+                    String name = r.path("username").asText(r.path("username").asText(""));
+                    if (id != 0 && !name.isBlank()) m.put(id, name);
+                }
+            }
+        } catch (Exception ignored) {}
+        return m;
     }
 
     public static UserDTO getById(int id) {

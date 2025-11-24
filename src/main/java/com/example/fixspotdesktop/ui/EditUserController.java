@@ -18,12 +18,10 @@ public class EditUserController {
     @FXML private TextField txtNombre;
     @FXML private TextField txtApellido;
     @FXML private TextField txtDireccion;
-
     @FXML private ComboBox<String> cbRol;
     @FXML private ComboBox<String> cbComuna;
 
     private HelloApplication app;
-
     private int userId;
     private Map<Integer, String> rolesMap;
     private Map<Integer, String> comunasMap;

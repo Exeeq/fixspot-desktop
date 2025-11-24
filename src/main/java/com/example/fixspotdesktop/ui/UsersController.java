@@ -74,7 +74,6 @@ public class UsersController {
 
                 btnEdit.setOnAction(e -> {
                     UserRow row = getTableView().getItems().get(getIndex());
-
                     UserDTO dto = new UserDTO(
                             row.getId(),
                             row.getRun(),
@@ -83,8 +82,8 @@ public class UsersController {
                             row.getApPaterno(),
                             row.getCorreo(),
                             row.getDireccion(),
-                            row.getIdRol(),      // id numerico de rol
-                            row.getIdComuna(),   // id numerico de comuna
+                            row.getIdRol(),
+                            row.getIdComuna(),
                             true
                     );
 

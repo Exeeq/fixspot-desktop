@@ -8,8 +8,9 @@ import java.util.Map;
 public class ComunasApi {
     private static final String BASE = com.example.fixspotdesktop.auth.AuthService.API_BASE + "/comunas/";
 
-    public static Map<Integer,String> getMap() {
-        Map<Integer,String> m = new HashMap<>();
+    // Este es el método que ya tienes para obtener el mapa de todas las comunas
+    public static Map<Integer, String> getMap() {
+        Map<Integer, String> m = new HashMap<>();
         try {
             JsonNode n = com.example.fixspotdesktop.net.ApiClient.getJson(BASE, com.example.fixspotdesktop.auth.AuthService.getAccessToken());
             if (n != null && n.isArray()) {
@@ -22,4 +23,18 @@ public class ComunasApi {
         } catch (Exception ignored) {}
         return m;
     }
+
+    // Agregar el método getById que obtiene una comuna por su ID
+    public static String getById(int idComuna) {
+        try {
+            // Usamos el método getMap() para obtener todas las comunas
+            Map<Integer, String> comunas = getMap();
+            // Devolvemos el nombre de la comuna con el ID proporcionado
+            return comunas.get(idComuna);  // Retorna null si no se encuentra el idComuna
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;  // En caso de error, retorna null
+        }
+    }
 }
+

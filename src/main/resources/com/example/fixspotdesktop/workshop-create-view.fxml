@@ -14,7 +14,7 @@
             <children>
                 <Label text="CREAR TALLER" styleClass="home-heading"/>
                 <Region HBox.hgrow="ALWAYS"/>
-                <Button text="Volver" styleClass="ghost-btn" onAction="#onCancel"/>
+                <Button text="Volver" styleClass="back-btn" onAction="#onCancel"/>
             </children>
             <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
         </HBox>
@@ -54,10 +54,11 @@
                         <Label text="Ingresar Dirección" styleClass="section-title"/>
                         <TextField fx:id="txtDireccionBusqueda"
                                    promptText="Ej: Ernesto Alvear 245, Puente Alto"
-                                   styleClass="input"/>
+                                   styleClass="input"
+                                   onKeyReleased="#onDireccionChanged"/>
 
-                        <Button text="Obtener Dirección" styleClass="primary-btn-2"
-                                onAction="#onObtenerDireccion"/>
+                        <ListView fx:id="listDireccionSugerida" prefHeight="150" />
+
 
                         <!-- Coordenadas ocultas -->
                         <TextField fx:id="txtLat" visible="false"/>

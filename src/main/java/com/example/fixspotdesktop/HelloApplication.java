@@ -6,6 +6,8 @@ import com.example.fixspotdesktop.ui.LoginController;
 import com.example.fixspotdesktop.ui.UsersController;
 import com.example.fixspotdesktop.ui.EditUserController;
 import com.example.fixspotdesktop.ui.CreateWorkshopController;
+import com.example.fixspotdesktop.ui.EditWorkshopController;
+import com.example.fixspotdesktop.net.TallerDTO;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+
 
 import com.example.fixspotdesktop.net.UserDTO;
 
@@ -27,7 +30,7 @@ public class HelloApplication extends Application {
     }
 
     // =========================================================
-    // 🔹 Método genérico para cargar cualquier escena (corregido)
+    // Método  para cargar cualquier escena
     // =========================================================
     public void loadScene(String fxml, java.util.function.Consumer<Object> controllerConsumer) {
         try {
@@ -55,7 +58,7 @@ public class HelloApplication extends Application {
     }
 
     // =========================================================
-    // 🔹 LOGIN
+    // LOGIN
     // =========================================================
     public void showLogin() {
         try {
@@ -81,7 +84,7 @@ public class HelloApplication extends Application {
     }
 
     // =========================================================
-    // 🔹 HOME
+    // HOME
     // =========================================================
     public void showHome() {
         try {
@@ -102,7 +105,7 @@ public class HelloApplication extends Application {
     }
 
     // =========================================================
-    // 🔹 USUARIOS
+    // USUARIOS
     // =========================================================
     public void openUsers() {
         try {
@@ -164,7 +167,7 @@ public class HelloApplication extends Application {
     }
 
     // =========================================================
-    // 🔹 TALLERES
+    // TALLERES
     // =========================================================
     public void openWorkshops() {
         try {
@@ -191,7 +194,7 @@ public class HelloApplication extends Application {
     }
 
     // =========================================================
-    // 🔹 CREAR TALLER (corregido + ruta correcta)
+    // CREAR TALLER
     // =========================================================
     public void openCreateWorkshop() {
         try {
@@ -214,7 +217,33 @@ public class HelloApplication extends Application {
     }
 
     // =========================================================
-    // 🔹 Tickets (módulo futuro)
+    // EDITAR TALLER
+    // =========================================================
+    public void openEditWorkshop(TallerDTO taller) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("edit-workshop-view.fxml"));
+            Parent root = loader.load();
+
+            EditWorkshopController controller = loader.getController();
+            controller.setApp(this);
+            controller.loadTaller(taller);
+
+            Scene sc = new Scene(root, 980, 700);
+            sc.getStylesheets().add(
+                    getClass().getResource("/com/example/fixspotdesktop/styles.css").toExternalForm()
+            );
+
+            stage.setTitle("Fixspot – Editar Taller");
+            stage.setScene(sc);
+            stage.centerOnScreen();
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    // =========================================================
+    // Tickets
     // =========================================================
     public void openTickets() {
         Alert a = new Alert(Alert.AlertType.INFORMATION, "Gestión de tickets (próximo módulo)");

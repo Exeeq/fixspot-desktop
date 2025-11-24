@@ -171,7 +171,16 @@
     .ghost-btn {
         -fx-padding: 6px 12px;
     }
+
 }
+
+.back-btn {
+    -fx-padding: 6px 12px;
+    -fx-background-color: #F8F8FF;
+
+}
+
+
 
 /* Estilos del formulario de crear usuario */
 

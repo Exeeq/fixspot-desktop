@@ -4,17 +4,16 @@ import com.example.fixspotdesktop.HelloApplication;
 import com.example.fixspotdesktop.net.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
-
 import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.collections.FXCollections;
 
 import java.io.File;
 import java.net.URI;
@@ -23,10 +22,12 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class CreateWorkshopController {
 
@@ -45,14 +46,14 @@ public class CreateWorkshopController {
     @FXML private TextField txtLon;
     @FXML private Button btnCrear;
     @FXML private WebView webMap;
+    @FXML private ListView<String> listDireccionSugerida;
 
     private File imagenFile;
     private Map<Integer, String> comunasMap;
     private List<UserDTO> usuarios;
     private List<ServicioDTO> servicios;
-
-    // NUEVO: estado persistente de checkboxes
     private Map<String, BooleanProperty> serviciosSeleccionados = new HashMap<>();
+    private Timer direccionBusquedaTimer = null;
 
     public void setApp(HelloApplication app) {
         this.app = app;
@@ -63,11 +64,24 @@ public class CreateWorkshopController {
         engine = webMap.getEngine();
         engine.load(getClass().getResource("/map/leaflet_map.html").toString());
 
-        // No usamos selectionModel para servicios
         listServicios.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
+        // Cargar los datos iniciales
         new Thread(this::loadData).start();
+
+        // Configurar el listener para el campo de dirección
+        txtDireccionBusqueda.textProperty().addListener((observable, oldValue, newValue) -> onDireccionChanged());
+
+        // Listener para la selección de dirección sugerida
+        listDireccionSugerida.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && !listDireccionSugerida.getItems().isEmpty()) {
+                // Asegurarse de que no se intente seleccionar en una lista vacía
+                txtDireccionBusqueda.setText(newValue);
+                onObtenerDireccion();
+            }
+        });
     }
+
 
     @FXML
     private void onSelectImage() {
@@ -86,32 +100,31 @@ public class CreateWorkshopController {
 
     private void loadData() {
         try {
+            // Obtener los datos necesarios
             comunasMap = ComunasApi.getMap();
             usuarios = UsersApi.listAll();
             servicios = ServiciosApi.listAll();
 
             Platform.runLater(() -> {
 
-                // COMUNAS
+                // Cargar las comunas y usuarios
                 cbComuna.getItems().setAll(comunasMap.values());
-
-                // ENCARGADOS
                 cbUsuario.getItems().setAll(
                         usuarios.stream()
                                 .map(u -> u.pnombre() + " " + u.apPaterno())
                                 .toList()
                 );
 
-                // SERVICIOS (solo nombres)
+                // Cargar los servicios disponibles
                 var nombresServicios = servicios.stream().map(ServicioDTO::nombre).toList();
                 listServicios.getItems().setAll(nombresServicios);
 
-                // Inicializar propiedades persistentes
+                // Inicializar el estado de los checkboxes
                 nombresServicios.forEach(nombre -> {
                     serviciosSeleccionados.put(nombre, new SimpleBooleanProperty(false));
                 });
 
-                // CHECKBOX CELL FACTORY (PERSISTENTE)
+                // Configurar el CheckBoxListCell para los servicios
                 listServicios.setCellFactory(lv ->
                         new CheckBoxListCell<>(item -> serviciosSeleccionados.get(item))
                 );
@@ -120,6 +133,84 @@ public class CreateWorkshopController {
         } catch (Exception e) {
             showError("Error cargando datos: " + e.getMessage());
         }
+    }
+
+    @FXML
+    private void onDireccionChanged() {
+        String query = txtDireccionBusqueda.getText().trim();
+
+        // Limpiar la lista antes de nuevas sugerencias
+        listDireccionSugerida.setItems(FXCollections.emptyObservableList());
+
+        if (query.isEmpty()) {
+            return; // No hacer nada si la consulta está vacía
+        }
+
+        // Cancelar el temporizador anterior si existe
+        if (direccionBusquedaTimer != null) {
+            direccionBusquedaTimer.cancel();
+        }
+
+        // Iniciar un nuevo temporizador para retrasar la consulta
+        direccionBusquedaTimer = new Timer();
+        direccionBusquedaTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                buscarDirecciones(query);
+            }
+        }, 500);  // Esperar 500ms antes de realizar la búsqueda
+    }
+
+    private void buscarDirecciones(String query) {
+        new Thread(() -> {
+            try {
+                String url = "https://nominatim.openstreetmap.org/search?q=" +
+                        URLEncoder.encode(query, StandardCharsets.UTF_8) +
+                        "&format=json&limit=5";
+
+                HttpClient client = HttpClient.newHttpClient();
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(url))
+                        .header("User-Agent", "FixSpotDesktop/1.0 (contact@yourcompany.com)")
+                        .build();
+
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+                if (response.body().contains("Bandwidth limit exceeded")) {
+                    Platform.runLater(() -> {
+                        showError("Se ha alcanzado el límite de solicitudes a la API. Intente nuevamente más tarde.");
+                    });
+                    return;
+                }
+
+                JsonNode json = new ObjectMapper().readTree(response.body());
+
+                if (!json.isArray() || json.size() == 0) {
+                    Platform.runLater(() -> {
+                        showError("No se encontraron sugerencias para la dirección.");
+                    });
+                    return;
+                }
+
+                List<String> suggestions = new ArrayList<>();
+                for (JsonNode item : json) {
+                    String address = item.path("display_name").asText();
+                    suggestions.add(address);
+                }
+
+                // Solo actualizar la lista si hay sugerencias
+                Platform.runLater(() -> {
+                    if (!suggestions.isEmpty()) {
+                        listDireccionSugerida.setItems(FXCollections.observableList(suggestions));
+                    }
+                });
+
+            } catch (Exception e) {
+                Platform.runLater(() -> {
+                    showError("Error al obtener las sugerencias de dirección. " + e.getMessage());
+                });
+            }
+        }).start();
     }
 
     @FXML
@@ -135,7 +226,7 @@ public class CreateWorkshopController {
             try {
                 String url = "https://nominatim.openstreetmap.org/search?q=" +
                         URLEncoder.encode(address, StandardCharsets.UTF_8) +
-                        "&format=json&limit=1";
+                        "&format=json&limit=1"; // Limitar a un solo resultado
 
                 HttpClient client = HttpClient.newHttpClient();
                 HttpRequest req = HttpRequest.newBuilder()
@@ -157,9 +248,7 @@ public class CreateWorkshopController {
                 Platform.runLater(() -> {
                     txtLat.setText(String.valueOf(lat));
                     txtLon.setText(String.valueOf(lon));
-
                     btnCrear.setDisable(false);
-
                     engine.executeScript("updateMarker(" + lat + "," + lon + ");");
                 });
 

@@ -21,7 +21,7 @@
                     onAction="#onOpenCreate"/>
             <Button fx:id="btnLogout"
                     text="Cerrar sesión"
-                    styleClass="ghost-btn"
+                    styleClass="back-btn"
                     onAction="#onLogout"/>
         </children>
         <padding>

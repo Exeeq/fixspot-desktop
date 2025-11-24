@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.WebView?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.fixspotdesktop.ui.EditWorkshopController"
+            prefWidth="1100" prefHeight="700">
+
+    <!-- Toolbar -->
+    <top>
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="toolbar">
+            <children>
+                <Label text="EDITAR TALLER" styleClass="home-heading"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Volver" styleClass="back-btn" onAction="#onCancel"/>
+            </children>
+            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+        </HBox>
+    </top>
+
+    <!-- Contenido -->
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+            <content>
+                <HBox alignment="TOP_CENTER" spacing="30">
+                    <padding><Insets top="30" right="30" bottom="30" left="30"/></padding>
+
+                    <!-- LADO IZQUIERDO FORMULARIO -->
+                    <VBox spacing="16" maxWidth="450">
+
+                        <TextField fx:id="txtNombre"
+                                   promptText="Nombre del taller*"
+                                   styleClass="input"/>
+
+                        <TextArea fx:id="txtDescripcion"
+                                  promptText="Descripción*"
+                                  prefHeight="120"
+                                  wrapText="true"
+                                  styleClass="input"/>
+
+                        <TextField fx:id="txtTelefono"
+                                   promptText="Teléfono*"
+                                   styleClass="input"/>
+
+                        <ComboBox fx:id="cbComuna"
+                                  promptText="Comuna*"
+                                  styleClass="input"/>
+
+                        <ComboBox fx:id="cbUsuario"
+                                  promptText="Encargado del taller*"
+                                  styleClass="input"/>
+
+                        <HBox spacing="10">
+                            <TextField fx:id="txtImagen"
+                                       promptText="Seleccione una imagen..."
+                                       editable="false"
+                                       styleClass="input"/>
+                            <Button text="Subir imagen"
+                                    onAction="#onSelectImage"/>
+                        </HBox>
+
+                        <!-- Servicios -->
+                        <Label text="Servicios que ofrece el taller"
+                               styleClass="section-title"/>
+                        <ListView fx:id="listServicios"
+                                  prefHeight="180"/>
+
+                        <!-- Dirección -->
+                        <Label text="Ingresar Dirección"
+                               styleClass="section-title"/>
+
+                        <TextField fx:id="txtDireccionBusqueda"
+                                   promptText="Ej: Ernesto Alvear 245, Puente Alto"
+                                   styleClass="input"
+                                   onKeyReleased="#onDireccionChanged"/>
+
+                        <ListView fx:id="listDireccionSugerida"
+                                  prefHeight="150"/>
+
+                        <!-- Coordenadas -->
+                        <TextField fx:id="txtLat" visible="false"/>
+                        <TextField fx:id="txtLon" visible="false"/>
+
+                        <Button text="Guardar cambios"
+                                fx:id="btnGuardar"
+                                styleClass="primary-btn-2"
+                                onAction="#onSave"
+                                disable="false"/>
+                    </VBox>
+
+                    <!-- LADO DERECHO MAPA -->
+                    <VBox>
+                        <WebView fx:id="webMap"
+                                 prefWidth="500"
+                                 prefHeight="400"/>
+                    </VBox>
+
+                </HBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

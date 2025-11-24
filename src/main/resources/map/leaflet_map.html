@@ -27,10 +27,13 @@
     var marker = null;
 
     function updateMarker(lat, lon) {
-        if (marker) map.removeLayer(marker);
+    if (!marker) {
         marker = L.marker([lat, lon]).addTo(map);
-        map.setView([lat, lon], 16);
+    } else {
+        marker.setLatLng([lat, lon]);
     }
+    map.setView([lat, lon], 16);
+}
 </script>
 
 </body>
