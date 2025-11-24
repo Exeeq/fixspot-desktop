@@ -246,9 +246,27 @@ public class HelloApplication extends Application {
     // Tickets
     // =========================================================
     public void openTickets() {
-        Alert a = new Alert(Alert.AlertType.INFORMATION, "Gestión de tickets (próximo módulo)");
-        a.setHeaderText(null);
-        a.showAndWait();
+        try {
+            FXMLLoader fx = new FXMLLoader(getClass().getResource("tickets-view.fxml"));
+            Parent root = fx.load();
+
+            com.example.fixspotdesktop.ui.TicketsController c = fx.getController();
+            c.setApp(this);
+
+            Scene sc = new Scene(root, 980, 600);
+            sc.getStylesheets().add(
+                    getClass().getResource("/com/example/fixspotdesktop/styles.css").toExternalForm()
+            );
+
+            stage.setTitle("Fixspot – Tickets de encargados de taller");
+            stage.setScene(sc);
+            stage.centerOnScreen();
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "No se pudo cargar tickets-view.fxml").showAndWait();
+        }
     }
 
     public static void main(String[] args) { launch(); }

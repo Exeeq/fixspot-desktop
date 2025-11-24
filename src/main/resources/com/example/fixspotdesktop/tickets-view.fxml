@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.fixspotdesktop.ui.TicketsController"
+            prefWidth="980" prefHeight="600">
+
+    <!-- Barra superior -->
+    <top>
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="toolbar">
+            <children>
+                <Label text="TICKETS" styleClass="home-heading"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Volver" styleClass="back-btn" onAction="#onBack"/>
+            </children>
+            <padding><Insets top="10" right="15" bottom="10" left="15"/></padding>
+        </HBox>
+    </top>
+
+    <!-- Contenido principal -->
+    <center>
+        <VBox spacing="15">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <Label text="Listado de tickets registrados"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+            <TableView fx:id="tableTickets" prefHeight="500" styleClass="table-view">
+
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="80"/>
+                    <TableColumn fx:id="colAsunto" text="Asunto" prefWidth="300"/>
+                    <TableColumn fx:id="colSolicitante" text="Solicitante" prefWidth="200"/>
+                    <TableColumn fx:id="colEstado" text="Estado" prefWidth="150"/>
+                </columns>
+
+            </TableView>
+
+        </VBox>
+    </center>
+
+</BorderPane>

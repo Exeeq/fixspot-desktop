@@ -12,11 +12,10 @@ public record TallerDTO(
         String descripcion,
         double latitud,
         double longitud,
-        String imagen  // Nuevo campo agregado para la imagen
+        String imagen
 ) {
     // Constructor para convertir JsonNode a TallerDTO
     public static TallerDTO from(JsonNode n) {
-        System.out.println("Datos del taller: " + n.toString());
         return new TallerDTO(
                 n.get("idTaller").asInt(),
                 n.get("idUsuario").asInt(),
@@ -27,11 +26,11 @@ public record TallerDTO(
                 n.get("descripcion").asText(""),
                 n.get("latitud").asDouble(),
                 n.get("longitud").asDouble(),
-                n.get("imagen").asText("")  // Extraemos la imagen
+                n.get("imagen").asText("")
         );
     }
 
-    // Métodos "getter"
+    // Métodos getter
     public int getId() { return id; }
     public int getIdUsuario() { return idUsuario; }
     public String getNombre() { return nombreTaller; }
