@@ -32,4 +32,11 @@ public class TicketsApi {
 
         return out;
     }
+
+    public static void updateEstado(int idTicket, int nuevoEstado) {
+        Map<String, String> body = new HashMap<>();
+        body.put("EstadoTicket", String.valueOf(nuevoEstado));
+
+        ApiClient.patchJson(BASE + idTicket + "/", body, AuthService.getAccessToken());
+    }
 }
