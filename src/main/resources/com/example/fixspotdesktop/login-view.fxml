@@ -17,7 +17,7 @@
             <VBox alignment="CENTER" spacing="20">
                 <ImageView fitWidth="330" preserveRatio="true" smooth="true">
                     <image>
-                        <Image url="@images/fixspot-logo.png"/>
+                        <Image url="@images/logo-fixspot2.png"/>
                     </image>
                 </ImageView>
 

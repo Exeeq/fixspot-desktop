@@ -76,7 +76,7 @@ public class HelloApplication extends Application {
             stage.getIcons().add(
                     new Image(
                             HelloApplication.class.getResourceAsStream(
-                                    "/com/example/fixspotdesktop/images/fixspot-logo.png"
+                                    "/com/example/fixspotdesktop/images/logo-fixspot.png"
                             )
                     )
             );

@@ -125,7 +125,7 @@
 
                     <ImageView fitWidth="260" preserveRatio="true" smooth="true" cache="true">
                         <image>
-                            <Image url="@images/fixspot-logo.png"/>
+                            <Image url="@images/logo-fixspot2.png"/>
                         </image>
                     </ImageView>
 
