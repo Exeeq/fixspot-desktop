@@ -67,16 +67,16 @@ public class HelloApplication extends Application {
             LoginController c = fx.getController();
             c.setApp(this);
 
-            Scene scene = new Scene(root, 960, 560);
+            Scene scene = new Scene(root, 1280, 720);
             scene.getStylesheets().add(
-                    getClass().getResource("styles.css").toExternalForm()
+                    getClass().getResource("styles/login.css").toExternalForm()
             );
 
             stage.setTitle("Fixspot – Acceso");
             stage.setScene(scene);
             stage.centerOnScreen();
-            stage.setMinWidth(900);
-            stage.setMinHeight(520);
+            stage.setMinWidth(1280);
+            stage.setMinHeight(720);
             stage.show();
         } catch (Exception e) {
             throw new RuntimeException("No se pudo cargar login-view.fxml: " + e.getMessage(), e);
@@ -93,8 +93,8 @@ public class HelloApplication extends Application {
             HomeController c = fx.getController();
             c.setApp(this);
 
-            Scene scene = new Scene(root, 960, 600);
-            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            Scene scene = new Scene(root, 1280, 720);
+            scene.getStylesheets().add(getClass().getResource("styles/home.css").toExternalForm());
             stage.setTitle("Fixspot – Inicio");
             stage.setScene(scene);
             stage.centerOnScreen();
@@ -114,8 +114,8 @@ public class HelloApplication extends Application {
             UsersController c = fx.getController();
             c.setApp(this);
 
-            Scene sc = new Scene(root, 980, 600);
-            sc.getStylesheets().add(getClass().getResource("/com/example/fixspotdesktop/styles.css").toExternalForm());
+            Scene sc = new Scene(root, 1280, 720);
+            sc.getStylesheets().add(getClass().getResource("styles/users.css").toExternalForm());
             stage.setTitle("Fixspot – Usuarios");
             stage.setScene(sc);
             stage.centerOnScreen();
@@ -131,8 +131,8 @@ public class HelloApplication extends Application {
             CreateUserController c = fx.getController();
             c.setApp(this);
 
-            Scene sc = new Scene(root, 800, 520);
-            sc.getStylesheets().add(getClass().getResource("/com/example/fixspotdesktop/styles.css").toExternalForm());
+            Scene sc = new Scene(root, 1280, 720);
+            sc.getStylesheets().add(getClass().getResource("styles/user-create.css").toExternalForm());
             stage.setTitle("Fixspot – Nuevo usuario");
             stage.setScene(sc);
             stage.centerOnScreen();
@@ -151,9 +151,9 @@ public class HelloApplication extends Application {
             controller.setApp(this);
             controller.loadUser(user);
 
-            Scene sc = new Scene(root);
+            Scene sc = new Scene(root, 1280, 720);
             sc.getStylesheets().add(
-                    getClass().getResource("/com/example/fixspotdesktop/styles.css").toExternalForm()
+                    getClass().getResource("styles/edit-user.css").toExternalForm()
             );
 
             stage.setTitle("Fixspot – Editar usuario");
@@ -177,10 +177,8 @@ public class HelloApplication extends Application {
             com.example.fixspotdesktop.ui.WorkshopsController c = fx.getController();
             c.setApp(this);
 
-            Scene sc = new Scene(root, 980, 600);
-            sc.getStylesheets().add(
-                    getClass().getResource("/com/example/fixspotdesktop/styles.css").toExternalForm()
-            );
+            Scene sc = new Scene(root, 1280, 720);
+            sc.getStylesheets().add(getClass().getResource("styles/workshops-view.css").toExternalForm());
 
             stage.setTitle("Fixspot – Talleres mecánicos");
             stage.setScene(sc);
@@ -203,8 +201,10 @@ public class HelloApplication extends Application {
             CreateWorkshopController c = fx.getController();
             c.setApp(this);
 
-            Scene sc = new Scene(root, 980, 700);
-            sc.getStylesheets().add(getClass().getResource("/com/example/fixspotdesktop/styles.css").toExternalForm());
+            Scene sc = new Scene(root, 1280, 720);
+            sc.getStylesheets().add(
+                    getClass().getResource("styles/create-workshop.css").toExternalForm()
+            );
 
             stage.setTitle("Fixspot – Crear taller");
             stage.setScene(sc);
@@ -228,9 +228,9 @@ public class HelloApplication extends Application {
             controller.setApp(this);
             controller.loadTaller(taller);
 
-            Scene sc = new Scene(root, 980, 700);
+            Scene sc = new Scene(root, 1280, 720);
             sc.getStylesheets().add(
-                    getClass().getResource("/com/example/fixspotdesktop/styles.css").toExternalForm()
+                    getClass().getResource("styles/edit-workshop.css").toExternalForm()
             );
 
             stage.setTitle("Fixspot – Editar Taller");
@@ -253,9 +253,9 @@ public class HelloApplication extends Application {
             com.example.fixspotdesktop.ui.TicketsController c = fx.getController();
             c.setApp(this);
 
-            Scene sc = new Scene(root, 980, 600);
+            Scene sc = new Scene(root, 1280, 720);
             sc.getStylesheets().add(
-                    getClass().getResource("/com/example/fixspotdesktop/styles.css").toExternalForm()
+                    getClass().getResource("styles/tickets.css").toExternalForm()
             );
 
             stage.setTitle("Fixspot – Tickets de encargados de taller");

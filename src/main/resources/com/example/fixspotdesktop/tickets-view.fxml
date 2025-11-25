@@ -5,8 +5,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.fixspotdesktop.ui.TicketsController"
-            prefWidth="980" prefHeight="600">
+            fx:controller="com.example.fixspotdesktop.ui.TicketsController">
 
     <!-- Barra superior -->
     <top>
@@ -20,29 +19,18 @@
         </HBox>
     </top>
 
-    <!-- Contenido principal -->
+    <!-- Contenedor principal -->
     <center>
-        <VBox spacing="15">
-            <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
-            </padding>
-
-            <Label text="Listado de tickets registrados"
-                   style="-fx-font-size: 16px; -fx-font-weight: bold;" />
-
-            <TableView fx:id="tableTickets" prefHeight="500" styleClass="table-view">
-
-                <columns>
-                    <TableColumn fx:id="colId" text="ID" prefWidth="80"/>
-                    <TableColumn fx:id="colAsunto" text="Asunto" prefWidth="300"/>
-                    <TableColumn fx:id="colSolicitante" text="Solicitante" prefWidth="200"/>
-                    <TableColumn fx:id="colEstado" text="Estado" prefWidth="150"/>
-                    <TableColumn fx:id="colAccion" text="Acción" prefWidth="150"/>
-                </columns>
-
-            </TableView>
-
-        </VBox>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER"
+                    style="-fx-background-color: transparent;">
+            <content>
+                <VBox fx:id="ticketsContainer"
+                      alignment="TOP_CENTER"
+                      spacing="18"
+                      style="-fx-background-color: transparent;">
+                </VBox>
+            </content>
+        </ScrollPane>
     </center>
 
 </BorderPane>

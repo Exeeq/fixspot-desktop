@@ -123,7 +123,7 @@ public class ApiClient {
             if (code >= 200 && code < 300) {
                 JsonNode ok = safeParse(bodyText);
                 if (ok != null) return ok;
-                return json.createObjectNode(); // PATCH 204 sin body
+                return json.createObjectNode();
             }
 
             throw new RuntimeException(pickErrorMessage(code, bodyText, "No autorizado."));

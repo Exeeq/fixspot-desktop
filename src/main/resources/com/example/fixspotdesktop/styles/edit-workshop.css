@@ -1,0 +1,166 @@
+/* ===========================
+   FONDO GLOBAL
+   =========================== */
+.root, .border-pane, .vbox, .hbox {
+    -fx-background-color: linear-gradient(to bottom right, #181824, #111320);
+}
+
+/* ===========================
+   TOOLBAR
+   =========================== */
+.toolbar {
+    -fx-background-color: rgba(255,255,255,0.04);
+    -fx-background-radius: 0 0 20 20;
+    -fx-border-color: rgba(255,255,255,0.12);
+    -fx-border-width: 0 0 1 0;
+}
+
+.home-heading {
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+/* ===========================
+   BOTONES BASE
+   =========================== */
+
+.primary-btn-2 {
+    -fx-background-color: linear-gradient(to right, #7B2FFF, #B56AFF);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10 22;
+    -fx-background-radius: 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 12, 0, 0, 3);
+}
+
+.primary-btn-2:hover {
+    -fx-background-color: linear-gradient(to right, #8a3fff, #c67eff);
+}
+
+.back-btn {
+    -fx-background-color: transparent;
+    -fx-border-color: rgba(255,255,255,0.45);
+    -fx-border-radius: 10;
+    -fx-text-fill: white;
+    -fx-padding: 8 20;
+}
+
+.back-btn:hover {
+    -fx-background-color: rgba(255,255,255,0.10);
+}
+
+/* ===========================
+   INPUTS
+   =========================== */
+
+.input, .text-field, .text-area, .combo-box {
+    -fx-background-color: rgba(255,255,255,0.08);
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255,255,255,0.45);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: rgba(255,255,255,0.18);
+    -fx-padding: 10 12;
+    -fx-font-size: 14px;
+}
+
+.text-area {
+    -fx-control-inner-background: rgba(255,255,255,0.03);
+}
+
+/* Hover */
+.input:hover, .text-field:hover, .combo-box:hover, .text-area:hover {
+    -fx-background-color: rgba(255,255,255,0.12);
+}
+
+/* Focus */
+.input:focused, .text-field:focused, .combo-box:focused, .text-area:focused {
+    -fx-border-color: #7B2FFF;
+    -fx-background-color: rgba(255,255,255,0.14);
+}
+
+/* ComboBox popup */
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.combo-box .list-cell {
+    -fx-background-color: #1e1e2d;
+    -fx-text-fill: white;
+}
+
+.combo-box .list-cell:hover {
+    -fx-background-color: #7B2FFF;
+}
+
+/* ===========================
+   LISTAS (servicios/direcciones)
+   =========================== */
+
+.list-view {
+    -fx-background-color: rgba(255,255,255,0.06);
+    -fx-background-radius: 10;
+    -fx-padding: 6;
+    -fx-text-fill: white;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.list-cell:hover {
+    -fx-background-color: rgba(123,47,255,0.25);
+}
+
+/* ===========================
+   SECTION TITLES
+   =========================== */
+
+.section-title {
+    -fx-text-fill: #dcdcff;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 0 4 0;
+}
+
+/* ===========================
+   MAPA (WebView)
+   =========================== */
+
+.web-view {
+    -fx-background-color: black;
+}
+
+.web-view, WebView {
+    -fx-border-color: rgba(255,255,255,0.18);
+    -fx-border-width: 1.2;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 15, 0, 0, 4);
+}
+
+/* ===========================
+   SCROLLPANE
+   =========================== */
+.scroll-pane {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: rgba(255,255,255,0.25);
+    -fx-background-radius: 10;
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: rgba(255,255,255,0.08);
+    -fx-background-radius: 10;
+}

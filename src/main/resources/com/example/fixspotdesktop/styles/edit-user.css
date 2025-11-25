@@ -1,0 +1,123 @@
+/* ===========================
+   FONDO GLOBAL
+   =========================== */
+.root, .border-pane, .scroll-pane {
+    -fx-background-color: linear-gradient(to bottom right, #181824, #111320);
+}
+
+/* ===========================
+   TOOLBAR SUPERIOR
+   =========================== */
+.toolbar {
+    -fx-background-color: rgba(255,255,255,0.05);
+    -fx-background-radius: 0 0 16 16;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: rgba(255,255,255,0.12);
+    -fx-padding: 14 20;
+}
+
+.home-heading {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+/* ===========================
+   CARD PRINCIPAL
+   =========================== */
+.card {
+    -fx-background-color: rgba(255,255,255,0.07);
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: rgba(255,255,255,0.12);
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 18, 0, 0, 8);
+}
+
+/* Título sección */
+.section-title {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+/* ===========================
+   INPUTS
+   =========================== */
+.input {
+    -fx-background-color: rgba(255, 255, 255, 0.10);
+    -fx-background-radius: 12;
+    -fx-padding: 10 14;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-border-color: rgba(255,255,255,0.15);
+    -fx-border-radius: 12;
+}
+
+/* Placeholder */
+.input .text-field,
+.input .password-field,
+.input .combo-box {
+    -fx-prompt-text-fill: #c9c9d6;
+}
+
+/* Focus */
+.input:focused {
+    -fx-background-color: rgba(255,255,255,0.18);
+    -fx-border-color: #a669ff;
+}
+
+/* Campo RUN desactivado */
+.text-field:disabled {
+    -fx-opacity: 0.6;
+    -fx-background-color: rgba(255,255,255,0.08);
+}
+
+/* ===========================
+   SELECT / ComboBox
+   =========================== */
+.combo-box .list-cell {
+    -fx-background-color: #2e2b40;
+    -fx-text-fill: white;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: #2e2b40;
+}
+
+/* ===========================
+   BOTONES
+   =========================== */
+.primary-btn-2 {
+    -fx-background-color: linear-gradient(to right, #7B2FFF, #B56AFF);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 14;
+    -fx-padding: 10 22;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.32), 12, 0, 0, 3);
+}
+
+.primary-btn-2:hover {
+    -fx-background-color: linear-gradient(to right, #8a3fff, #c57bff);
+}
+
+.ghost-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-border-color: rgba(255,255,255,0.6);
+    -fx-border-radius: 14;
+    -fx-padding: 8 20;
+}
+
+.ghost-btn:hover {
+    -fx-background-color: rgba(255,255,255,0.12);
+}
+
+/* ===========================
+   SCROLLPANE LIMPIO
+   =========================== */
+.scroll-pane,
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}

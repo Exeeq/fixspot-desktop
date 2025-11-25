@@ -1,0 +1,126 @@
+/* =========================== */
+/* FONDO GENERAL               */
+/* =========================== */
+.root, .border-pane, .vbox {
+    -fx-background-color: linear-gradient(to bottom right, #181824, #111320);
+}
+
+/* Quitar fondo blanco del ScrollPane */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.vbox {
+    -fx-background-color: transparent;
+}
+
+/* =========================== */
+/* TOOLBAR                     */
+/* =========================== */
+.toolbar {
+    -fx-background-color: rgba(255,255,255,0.05);
+    -fx-background-radius: 0 0 18 18;
+    -fx-border-color: rgba(255,255,255,0.12);
+    -fx-border-width: 0 0 1 0;
+}
+
+.home-heading {
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+/* =========================== */
+/* BOTÓN VOLVER                */
+/* =========================== */
+.back-btn {
+    -fx-background-color: transparent;
+    -fx-border-color: rgba(255,255,255,0.45);
+    -fx-border-radius: 10;
+    -fx-text-fill: white;
+    -fx-padding: 8 20;
+}
+
+.back-btn:hover {
+    -fx-background-color: rgba(255,255,255,0.12);
+}
+
+/* =========================== */
+/* CONTENEDOR DE CARDS         */
+/* =========================== */
+#ticketsContainer {
+    -fx-padding: 20;
+    -fx-spacing: 18;
+    -fx-alignment: TOP_CENTER;
+    -fx-background-color: transparent;
+}
+
+/* =========================== */
+/* TARJETAS                    */
+/* =========================== */
+.ticket-card {
+    -fx-background-color: rgba(255,255,255,0.07);
+    -fx-background-radius: 16;
+    -fx-padding: 20;
+    -fx-spacing: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0.2, 0, 3);
+    -fx-min-width: 760;
+    -fx-max-width: 860;
+}
+
+/* =========================== */
+/* TEXTO DE TARJETA            */
+/* =========================== */
+.ticket-title {
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.ticket-info {
+    -fx-text-fill: rgba(255,255,255,0.65);
+    -fx-font-size: 14px;
+}
+
+/* =========================== */
+/* CHIP DE ESTADO              */
+/* =========================== */
+.estado-chip {
+    -fx-padding: 5 12;
+    -fx-background-radius: 12;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+
+.estado-abierto {
+    -fx-background-color: #ff4b4b;
+    -fx-text-fill: white;
+}
+
+.estado-proceso {
+    -fx-background-color: #ffb84d;
+    -fx-text-fill: black;
+}
+
+.estado-resuelto {
+    -fx-background-color: #4cd964;
+    -fx-text-fill: black;
+}
+
+/* =========================== */
+/* BOTÓN RESOLVER              */
+/* =========================== */
+.ticket-btn {
+    -fx-background-color: #7b2fff;
+    -fx-text-fill: white;
+    -fx-padding: 8 20;
+    -fx-background-radius: 10;
+}
+
+.ticket-btn:disabled {
+    -fx-opacity: 0.4;
+}

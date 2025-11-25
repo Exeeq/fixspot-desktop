@@ -1,0 +1,70 @@
+/* Fondo general */
+.login-root {
+    -fx-background-color: linear-gradient(to bottom right, #2b2d42, #1e1f2a);
+}
+
+/* Panel izquierdo */
+.left-pane {
+    -fx-background-color: linear-gradient(to bottom right, #1b1033, #2b0060);
+    -fx-padding: 40;
+}
+
+.left-slogan {
+    -fx-text-fill: #f5f5f5;
+    -fx-font-size: 22px;
+    -fx-font-weight: 500;
+}
+
+/* Tarjeta del formulario */
+.login-card {
+    -fx-background-color: rgba(255,255,255,0.16);
+    -fx-padding: 40;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 20, 0, 0, 8);
+}
+
+/* Títulos */
+.title {
+    -fx-font-size: 32px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.subtitle {
+    -fx-font-size: 16px;
+    -fx-text-fill: #dcdcdc;
+}
+
+/* Inputs */
+.input {
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+    -fx-font-size: 16px;
+    -fx-background-color: rgba(255,255,255,0.85);
+}
+
+.input:focused {
+    -fx-border-color: #6a0dad;
+    -fx-border-width: 2;
+    -fx-background-color: white;
+}
+
+/* Botón */
+.primary-btn {
+    -fx-background-color: linear-gradient(to right, #6a0dad, #8f3aff);
+    -fx-text-fill: white;
+    -fx-padding: 12;
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 12;
+}
+
+.primary-btn:hover {
+    -fx-background-color: linear-gradient(to right, #8f3aff, #b56aff);
+}
+
+/* Mensajes */
+.status {
+    -fx-text-fill: #ffbaba;
+    -fx-font-size: 14px;
+}

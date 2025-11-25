@@ -4,35 +4,24 @@ import com.example.fixspotdesktop.HelloApplication;
 import com.example.fixspotdesktop.net.TicketDTO;
 import com.example.fixspotdesktop.net.TicketsApi;
 import com.example.fixspotdesktop.net.UsersApi;
+
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.layout.*;
+
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.Priority;
 import java.util.List;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-
-
 
 public class TicketsController {
 
     private HelloApplication app;
 
-    @FXML private TableView<TicketDTO> tableTickets;
-
-    @FXML private TableColumn<TicketDTO, Number> colId;
-    @FXML private TableColumn<TicketDTO, String> colAsunto;
-    @FXML private TableColumn<TicketDTO, String> colSolicitante;
-    @FXML private TableColumn<TicketDTO, String> colEstado;
-    @FXML private TableColumn<TicketDTO, Void> colAccion;
-
-
-    private final ObservableList<TicketDTO> ticketsList = FXCollections.observableArrayList();
+    @FXML private VBox ticketsContainer;
 
     public void setApp(HelloApplication app) {
         this.app = app;
@@ -40,62 +29,92 @@ public class TicketsController {
 
     @FXML
     private void initialize() {
-        colId.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().idTicket()));
-        colAsunto.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().asunto()));
-
-        colSolicitante.setCellValueFactory(data -> {
-            int idUser = data.getValue().solicitante();
-            String nombre = UsersApi.getById(idUser).nombreCompleto();
-            return new SimpleStringProperty(nombre);
-        });
-
-        colEstado.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().estadoNombre()));
-
-        tableTickets.setItems(ticketsList);
-
-        agregarBotonAccion();
-
         loadTickets();
     }
 
-    private void agregarBotonAccion() {
-        colAccion.setCellFactory(col -> new TableCell<>() {
+    /** ==============================
+     * CARGAR TICKETS Y GENERAR TARJETAS
+     * ============================== */
+    private void loadTickets() {
+        new Thread(() -> {
+            try {
+                List<TicketDTO> tickets = TicketsApi.listAll();
 
-            private final Button btn = new Button("Acción");
+                Platform.runLater(() -> {
+                    ticketsContainer.getChildren().clear();
+                    for (TicketDTO t : tickets) {
+                        ticketsContainer.getChildren().add(crearTarjeta(t));
+                    }
+                });
 
-            {
-                btn.getStyleClass().add("primary-btn-2");
-                btn.setMaxWidth(Double.MAX_VALUE);
+            } catch (Exception e) {
+                Platform.runLater(() -> {
+                    Alert a = new Alert(Alert.AlertType.ERROR,
+                            "Error cargando tickets: " + e.getMessage());
+                    a.showAndWait();
+                });
             }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty) {
-                    setGraphic(null);
-                    return;
-                }
-
-                TicketDTO ticket = getTableView().getItems().get(getIndex());
-
-                // Si NO está pendiente → botón deshabilitado
-                if (!ticket.estadoNombre().equalsIgnoreCase("Pendiente")) {
-                    btn.setText("N/A");
-                    btn.setDisable(true);
-                } else {
-                    btn.setText("Resolver");
-                    btn.setDisable(false);
-
-                    btn.setOnAction(e -> abrirPopup(ticket));
-                }
-
-                setGraphic(btn);
-            }
-        });
+        }).start();
     }
 
+    /** ==============================
+     * CREAR TARJETA VISUAL DE TICKET
+     * ============================== */
+    private HBox crearTarjeta(TicketDTO t) {
+
+        HBox card = new HBox(20);
+        card.getStyleClass().add("ticket-card");
+        card.setPadding(new Insets(18));
+        card.setFillHeight(true);
+
+        // TÍTULO
+        Label title = new Label("#" + t.idTicket() + " – " + t.asunto());
+        title.getStyleClass().add("ticket-title");
+
+        // SOLICITANTE
+        String nombreSolicitante = UsersApi.getById(t.solicitante()).nombreCompleto();
+        Label solicitante = new Label("Solicitante: " + nombreSolicitante);
+        solicitante.getStyleClass().add("ticket-info");
+
+        // CHIP ESTADO
+        Label chip = new Label(t.estadoNombre());
+        chip.getStyleClass().add("estado-chip");
+
+        String estado = t.estadoNombre().toLowerCase();
+        if (estado.contains("pendiente")) chip.getStyleClass().add("estado-abierto");
+        else if (estado.contains("proceso")) chip.getStyleClass().add("estado-proceso");
+        else chip.getStyleClass().add("estado-resuelto");
+
+        // BOTÓN DE ACCIÓN
+        Button btn = new Button();
+        btn.getStyleClass().add("ticket-btn");
+
+        if (estado.contains("pendiente")) {
+            btn.setText("Resolver");
+            btn.setDisable(false);
+            btn.setOnAction(e -> abrirPopup(t));
+        } else {
+            btn.setText("N/A");
+            btn.setDisable(true);
+        }
+
+        // CONTENEDOR IZQUIERDO
+        VBox info = new VBox(5, title, solicitante, chip);
+
+        // ESPACIADOR
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        card.getChildren().addAll(info, spacer, btn);
+
+        return card;
+    }
+
+    /** ==============================
+     * POPUP DE RESOLVER/RECHAZAR
+     * ============================== */
     private void abrirPopup(TicketDTO ticket) {
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Resolver ticket");
         alert.setHeaderText("Ticket #" + ticket.idTicket());
@@ -103,22 +122,20 @@ public class TicketsController {
 
         ButtonType btnAceptar = new ButtonType("Aceptar");
         ButtonType btnRechazar = new ButtonType("Rechazar");
-        ButtonType btnCancelar = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType btnCancelar =
+                new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
 
         alert.getButtonTypes().setAll(btnAceptar, btnRechazar, btnCancelar);
 
         alert.showAndWait().ifPresent(type -> {
-
-            if (type == btnAceptar) {
-                cambiarEstado(ticket.idTicket(), 2);
-            }
-
-            if (type == btnRechazar) {
-                cambiarEstado(ticket.idTicket(), 3);
-            }
+            if (type == btnAceptar) cambiarEstado(ticket.idTicket(), 2);
+            if (type == btnRechazar) cambiarEstado(ticket.idTicket(), 3);
         });
     }
 
+    /** ==============================
+     * ACTUALIZAR ESTADO EN API
+     * ============================== */
     private void cambiarEstado(int ticketId, int nuevoEstado) {
 
         new Thread(() -> {
@@ -130,7 +147,7 @@ public class TicketsController {
                     ok.setHeaderText(null);
                     ok.setContentText("Ticket actualizado correctamente.");
                     ok.showAndWait();
-                    loadTickets(); // refrescar tabla
+                    loadTickets();
                 });
 
             } catch (Exception ex) {
@@ -138,25 +155,6 @@ public class TicketsController {
                     Alert err = new Alert(Alert.AlertType.ERROR,
                             "Error actualizando ticket: " + ex.getMessage());
                     err.showAndWait();
-                });
-            }
-        }).start();
-    }
-
-    private void loadTickets() {
-        new Thread(() -> {
-            try {
-                List<TicketDTO> tickets = TicketsApi.listAll();
-
-                Platform.runLater(() -> {
-                    ticketsList.clear();
-                    ticketsList.addAll(tickets);
-                });
-
-            } catch (Exception e) {
-                Platform.runLater(() -> {
-                    Alert a = new Alert(Alert.AlertType.ERROR, "Error cargando tickets: " + e.getMessage());
-                    a.showAndWait();
                 });
             }
         }).start();

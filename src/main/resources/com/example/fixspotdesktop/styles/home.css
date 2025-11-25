@@ -1,0 +1,125 @@
+/* CONTENEDOR GENERAL DEL HOME */
+.home-root {
+    -fx-background-color: transparent;
+    -fx-divider-position: 0.60;
+}
+
+/* Panel izquierdo */
+.home-left {
+    -fx-background-color: linear-gradient(to bottom right, #181824, #111320);
+}
+
+/* Panel derecho: morado Fixspot */
+.home-right {
+    -fx-background-color: linear-gradient(to bottom right, #1b1033, #2b0060);
+}
+
+/* Título principal del panel */
+.home-heading {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+/* Subtítulo */
+.home-subheading {
+    -fx-text-fill: #d0d0e6;
+    -fx-font-size: 15px;
+}
+
+/* Tarjetas de menú (glass) */
+.menu-card {
+    -fx-background-color: rgba(255, 255, 255, 0.06);
+    -fx-background-radius: 18;
+    -fx-padding: 18;
+    -fx-spacing: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 16, 0, 0, 8);
+    -fx-border-color: rgba(255, 255, 255, 0.10);
+    -fx-border-radius: 18;
+    -fx-border-width: 1;
+}
+
+.menu-card:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Icono circular de cada card */
+.menu-icon-circle {
+    -fx-background-color: linear-gradient(to bottom right, #6a0dad, #b56aff);
+    -fx-background-radius: 999;
+    -fx-padding: 10;
+}
+
+/* Título de la tarjeta */
+.menu-title {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+}
+
+/* Descripción de la tarjeta */
+.menu-desc {
+    -fx-text-fill: #c5c5d8;
+    -fx-font-size: 13px;
+}
+
+/* BOTONES */
+
+.button.primary-btn {
+    -fx-background-color: linear-gradient(to right, #6a0dad, #b56aff);
+    -fx-text-fill: #ffffff;
+    -fx-padding: 8 22 8 22;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 999;
+    -fx-border-radius: 999;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.30), 10, 0, 0, 4);
+}
+
+.button.primary-btn:hover {
+    -fx-background-color: linear-gradient(to right, #8f3aff, #d27bff);
+}
+
+.button.primary-btn:pressed {
+    -fx-background-color: linear-gradient(to right, #502070, #7f2fb5);
+    -fx-effect: none;
+}
+
+/* Ajustes específicos para los botones dentro de las tarjetas */
+.menu-btn {
+    -fx-alignment: CENTER;
+    -fx-max-width: 160;
+}
+
+/* Branding del panel derecho */
+.brand-title {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.brand-sub {
+    -fx-text-fill: #f4f4ff;
+    -fx-font-size: 14px;
+}
+
+.brand-meta {
+    -fx-text-fill: #e0d7ff;
+    -fx-font-size: 13px;
+}
+
+/* Botón Cerrar sesión tipo "ghost" */
+.ghost-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: rgba(255,255,255,0.6);
+    -fx-border-radius: 999;
+    -fx-padding: 8 20 8 20;
+    -fx-font-size: 14px;
+}
+
+.ghost-btn:hover {
+    -fx-background-color: rgba(255,255,255,0.12);
+}

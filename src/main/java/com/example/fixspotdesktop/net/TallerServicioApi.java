@@ -27,7 +27,7 @@ public class TallerServicioApi {
             ApiClient.delete(url, AuthService.getAccessToken());
 
         } catch (Exception e) {
-            throw new RuntimeException("Error al eliminar los servicios del taller: " + e.getMessage());
+            throw new RuntimeException("Error al eliminar los servicios del taller.");
         }
     }
 
@@ -52,7 +52,7 @@ public class TallerServicioApi {
             return result;
 
         } catch (Exception e) {
-            throw new RuntimeException("Error al obtener servicios del taller: " + e.getMessage());
+            throw new RuntimeException("Error al obtener servicios del taller. ");
         }
     }
 }
