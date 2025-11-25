@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 
 
 import com.example.fixspotdesktop.net.UserDTO;
@@ -72,6 +73,14 @@ public class HelloApplication extends Application {
                     getClass().getResource("styles/login.css").toExternalForm()
             );
 
+            stage.getIcons().add(
+                    new Image(
+                            HelloApplication.class.getResourceAsStream(
+                                    "/com/example/fixspotdesktop/images/fixspot-logo.png"
+                            )
+                    )
+            );
+
             stage.setTitle("Fixspot – Acceso");
             stage.setScene(scene);
             stage.centerOnScreen();
@@ -95,6 +104,14 @@ public class HelloApplication extends Application {
 
             Scene scene = new Scene(root, 1280, 720);
             scene.getStylesheets().add(getClass().getResource("styles/home.css").toExternalForm());
+
+            stage.getIcons().add(
+                    new Image(
+                            HelloApplication.class.getResourceAsStream(
+                                    "/com/example/fixspotdesktop/images/fixspot-logo.png"
+                            )
+                    )
+            );
             stage.setTitle("Fixspot – Inicio");
             stage.setScene(scene);
             stage.centerOnScreen();
@@ -115,6 +132,13 @@ public class HelloApplication extends Application {
             c.setApp(this);
 
             Scene sc = new Scene(root, 1280, 720);
+            stage.getIcons().add(
+                    new Image(
+                            HelloApplication.class.getResourceAsStream(
+                                    "/com/example/fixspotdesktop/images/fixspot-logo.png"
+                            )
+                    )
+            );
             sc.getStylesheets().add(getClass().getResource("styles/users.css").toExternalForm());
             stage.setTitle("Fixspot – Usuarios");
             stage.setScene(sc);
@@ -132,6 +156,13 @@ public class HelloApplication extends Application {
             c.setApp(this);
 
             Scene sc = new Scene(root, 1280, 720);
+            stage.getIcons().add(
+                    new Image(
+                            HelloApplication.class.getResourceAsStream(
+                                    "/com/example/fixspotdesktop/images/fixspot-logo.png"
+                            )
+                    )
+            );
             sc.getStylesheets().add(getClass().getResource("styles/user-create.css").toExternalForm());
             stage.setTitle("Fixspot – Nuevo usuario");
             stage.setScene(sc);
@@ -150,6 +181,13 @@ public class HelloApplication extends Application {
             EditUserController controller = loader.getController();
             controller.setApp(this);
             controller.loadUser(user);
+            stage.getIcons().add(
+                    new Image(
+                            HelloApplication.class.getResourceAsStream(
+                                    "/com/example/fixspotdesktop/images/fixspot-logo.png"
+                            )
+                    )
+            );
 
             Scene sc = new Scene(root, 1280, 720);
             sc.getStylesheets().add(
@@ -178,6 +216,13 @@ public class HelloApplication extends Application {
             c.setApp(this);
 
             Scene sc = new Scene(root, 1280, 720);
+            stage.getIcons().add(
+                    new Image(
+                            HelloApplication.class.getResourceAsStream(
+                                    "/com/example/fixspotdesktop/images/fixspot-logo.png"
+                            )
+                    )
+            );
             sc.getStylesheets().add(getClass().getResource("styles/workshops-view.css").toExternalForm());
 
             stage.setTitle("Fixspot – Talleres mecánicos");
@@ -202,6 +247,13 @@ public class HelloApplication extends Application {
             c.setApp(this);
 
             Scene sc = new Scene(root, 1280, 720);
+            stage.getIcons().add(
+                    new Image(
+                            HelloApplication.class.getResourceAsStream(
+                                    "/com/example/fixspotdesktop/images/fixspot-logo.png"
+                            )
+                    )
+            );
             sc.getStylesheets().add(
                     getClass().getResource("styles/create-workshop.css").toExternalForm()
             );
@@ -229,6 +281,13 @@ public class HelloApplication extends Application {
             controller.loadTaller(taller);
 
             Scene sc = new Scene(root, 1280, 720);
+            stage.getIcons().add(
+                    new Image(
+                            HelloApplication.class.getResourceAsStream(
+                                    "/com/example/fixspotdesktop/images/fixspot-logo.png"
+                            )
+                    )
+            );
             sc.getStylesheets().add(
                     getClass().getResource("styles/edit-workshop.css").toExternalForm()
             );
@@ -254,6 +313,13 @@ public class HelloApplication extends Application {
             c.setApp(this);
 
             Scene sc = new Scene(root, 1280, 720);
+            stage.getIcons().add(
+                    new Image(
+                            HelloApplication.class.getResourceAsStream(
+                                    "/com/example/fixspotdesktop/images/fixspot-logo.png"
+                            )
+                    )
+            );
             sc.getStylesheets().add(
                     getClass().getResource("styles/tickets.css").toExternalForm()
             );

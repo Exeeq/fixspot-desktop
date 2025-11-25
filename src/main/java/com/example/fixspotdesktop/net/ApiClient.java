@@ -25,13 +25,24 @@ public class ApiClient {
 
     private static String pickErrorMessage(int code, String bodyText, String unauthorizedMsg) {
         JsonNode err = safeParse(bodyText);
-        String detail = (err != null && err.has("detail")) ? err.get("detail").asText() : null;
+        String detail = null;
+
+        if (err != null) {
+            if (err.has("detail")) {
+                detail = err.get("detail").asText();
+            }
+            else if (err.has("message")) {
+                detail = err.get("message").asText();
+            } else if (err.has("error")) {
+                detail = err.get("error").asText();
+            }
+        }
 
         if (detail == null || detail.isBlank()) {
-            if (code == 401) detail = unauthorizedMsg;
+            if (code == 401)       detail = unauthorizedMsg;
             else if (code == 403) detail = "Acceso no autorizado.";
             else if (code >= 500) detail = "Error del servidor. Intenta más tarde.";
-            else detail = "Solicitud inválida.";
+            else                  detail = "Solicitud inválida.";
         }
         return detail;
     }
@@ -95,7 +106,7 @@ public class ApiClient {
                 return json.createObjectNode();
             }
 
-            throw new RuntimeException("Error: " + bodyText);
+            throw new RuntimeException(pickErrorMessage(code, bodyText, "No autorizado."));
 
         } catch (RuntimeException e) {
             throw e;
@@ -176,7 +187,7 @@ public class ApiClient {
 
             int code = res.statusCode();
             if (code >= 200 && code < 300) {
-                return; // 204/200 OK
+                return;
             }
 
             String bodyText = res.body();
