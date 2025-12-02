@@ -43,7 +43,6 @@ public class EditWorkshopController {
     @FXML private WebView webMap;
     @FXML private ListView<String> listDireccionSugerida;
 
-
     private double lat = 0;
     private double lon = 0;
     private int tallerId;
@@ -71,9 +70,6 @@ public class EditWorkshopController {
         });
     }
 
-    /** ================================
-     *       CARGAR DATOS DEL TALLER
-     *  ================================ */
     public void loadTaller(TallerDTO t) {
         this.tallerId = t.id();
 
@@ -99,7 +95,7 @@ public class EditWorkshopController {
                     lat = t.latitud();
                     lon = t.longitud();
 
-                    // Pre-cargar la imagen
+                    // Pre-cargar la imagen (ruta/URL almacenada)
                     txtImagen.setText(t.imagen());
 
                     // Cargar las comunas y usuarios
@@ -133,7 +129,7 @@ public class EditWorkshopController {
                     }
 
                     // Mapa
-                    Platform.runLater(() -> tryUpdateMarker());
+                    Platform.runLater(this::tryUpdateMarker);
 
                     // ==== Listener direcciones ====
                     txtDireccionBusqueda.textProperty().addListener((obs, oldVal, newVal) -> onDireccionChanged());
@@ -152,9 +148,6 @@ public class EditWorkshopController {
         }).start();
     }
 
-    /** ================================
-     *        BUSCAR DIRECCIONES
-     *  ================================ */
     @FXML
     private void onDireccionChanged() {
         String query = txtDireccionBusqueda.getText().trim();
@@ -179,7 +172,7 @@ public class EditWorkshopController {
             public void run() {
                 buscarDirecciones(query);
             }
-        }, 500);  // Esperar 500ms antes de realizar la búsqueda
+        }, 500);
     }
 
     private void buscarDirecciones(String query) {
@@ -208,9 +201,6 @@ public class EditWorkshopController {
         }).start();
     }
 
-    /** ================================
-     *        OBTENER COORDENADAS
-     *  ================================ */
     @FXML
     private void onObtenerDireccion() {
         String address = txtDireccionBusqueda.getText().trim();
@@ -277,18 +267,81 @@ public class EditWorkshopController {
         }
     }
 
+    private boolean validarTelefonoFormato(String telefono) {
+        if (telefono == null) return false;
+        String t = telefono.trim();
+        return t.matches("^\\+569\\d{8}$");
+    }
 
+    private boolean validarFormulario() {
+        String nombre = txtNombre.getText() != null ? txtNombre.getText().trim() : "";
+        String descripcion = txtDescripcion.getText() != null ? txtDescripcion.getText().trim() : "";
+        String telefono = txtTelefono.getText() != null ? txtTelefono.getText().trim() : "";
+        String direccion = txtDireccionBusqueda.getText() != null ? txtDireccionBusqueda.getText().trim() : "";
+        String latStr = txtLat.getText() != null ? txtLat.getText().trim() : "";
+        String lonStr = txtLon.getText() != null ? txtLon.getText().trim() : "";
+        String imagenTexto = txtImagen.getText() != null ? txtImagen.getText().trim() : "";
 
-    /** ================================
-     *        GUARDAR CAMBIOS
-     *  ================================ */
+        if (nombre.isEmpty() || nombre.length() < 3) {
+            showError("El nombre del taller debe tener al menos 3 caracteres.");
+            return false;
+        }
+
+        if (descripcion.isEmpty() || descripcion.length() < 8) {
+            showError("La descripción debe tener al menos 8 caracteres.");
+            return false;
+        }
+
+        if (telefono.isEmpty()) {
+            showError("Debe ingresar un número de teléfono.");
+            return false;
+        }
+
+        if (!validarTelefonoFormato(telefono)) {
+            showError("El teléfono debe tener el formato +569xxxxxxxx (ej: +56912345678).");
+            return false;
+        }
+
+        if (cbComuna.getValue() == null) {
+            showError("Debe seleccionar una comuna.");
+            return false;
+        }
+
+        if (cbUsuario.getValue() == null) {
+            showError("Debe seleccionar un encargado para el taller.");
+            return false;
+        }
+
+        if (direccion.isEmpty()) {
+            showError("Debe ingresar una dirección y obtener su ubicación en el mapa.");
+            return false;
+        }
+
+        if (latStr.isEmpty() || lonStr.isEmpty()) {
+            showError("Debe obtener la dirección en el mapa antes de guardar.");
+            return false;
+        }
+
+        if ((imagenFile == null) && imagenTexto.isEmpty()) {
+            showError("El taller debe tener una imagen. Mantenga la existente o seleccione una nueva.");
+            return false;
+        }
+        boolean hayServicioSeleccionado = serviciosSeleccionados.values().stream()
+                .anyMatch(BooleanProperty::get);
+
+        if (!hayServicioSeleccionado) {
+            showError("Debe seleccionar al menos un servicio para el taller.");
+            return false;
+        }
+
+        return true;
+    }
+
     @FXML
     private void onSave() {
-        // Lógica para guardar los cambios del taller
 
-        // Validar si los campos obligatorios están completos
-        if (txtLat.getText().isEmpty() || txtLon.getText().isEmpty()) {
-            showError("Debe obtener la dirección antes de guardar.");
+        // Validar todo antes de intentar actualizar
+        if (!validarFormulario()) {
             return;
         }
 
@@ -344,17 +397,11 @@ public class EditWorkshopController {
         }
     }
 
-    /** ================================
-     *        CANCELAR
-     *  ================================ */
     @FXML
     private void onCancel() {
         app.openWorkshops();
     }
 
-    /** ================================
-     *        ALERTAS
-     *  ================================ */
     private void showError(String msg) {
         Alert a = new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK);
         a.setHeaderText(null);

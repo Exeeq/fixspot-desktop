@@ -75,13 +75,11 @@ public class CreateWorkshopController {
         // Listener para la selección de dirección sugerida
         listDireccionSugerida.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && !listDireccionSugerida.getItems().isEmpty()) {
-                // Asegurarse de que no se intente seleccionar en una lista vacía
                 txtDireccionBusqueda.setText(newValue);
                 onObtenerDireccion();
             }
         });
     }
-
 
     @FXML
     private void onSelectImage() {
@@ -143,22 +141,20 @@ public class CreateWorkshopController {
         listDireccionSugerida.setItems(FXCollections.emptyObservableList());
 
         if (query.isEmpty()) {
-            return; // No hacer nada si la consulta está vacía
+            return;
         }
 
-        // Cancelar el temporizador anterior si existe
         if (direccionBusquedaTimer != null) {
             direccionBusquedaTimer.cancel();
         }
 
-        // Iniciar un nuevo temporizador para retrasar la consulta
         direccionBusquedaTimer = new Timer();
         direccionBusquedaTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 buscarDirecciones(query);
             }
-        }, 500);  // Esperar 500ms antes de realizar la búsqueda
+        }, 500);
     }
 
     private void buscarDirecciones(String query) {
@@ -226,7 +222,7 @@ public class CreateWorkshopController {
             try {
                 String url = "https://nominatim.openstreetmap.org/search?q=" +
                         URLEncoder.encode(address, StandardCharsets.UTF_8) +
-                        "&format=json&limit=1"; // Limitar a un solo resultado
+                        "&format=json&limit=1";
 
                 HttpClient client = HttpClient.newHttpClient();
                 HttpRequest req = HttpRequest.newBuilder()
@@ -258,16 +254,81 @@ public class CreateWorkshopController {
         }).start();
     }
 
-    @FXML
-    private void onCrear() {
+    private boolean validarTelefonoFormato(String telefono) {
+        if (telefono == null) return false;
+        String t = telefono.trim();
+        return t.matches("^\\+569\\d{8}$");
+    }
 
-        if (txtLat.getText().isEmpty() || txtLon.getText().isEmpty()) {
-            showError("Debe obtener la dirección antes de crear el taller.");
-            return;
+    private boolean validarFormulario() {
+        String nombre = txtNombre.getText() != null ? txtNombre.getText().trim() : "";
+        String descripcion = txtDescripcion.getText() != null ? txtDescripcion.getText().trim() : "";
+        String telefono = txtTelefono.getText() != null ? txtTelefono.getText().trim() : "";
+        String direccion = txtDireccionBusqueda.getText() != null ? txtDireccionBusqueda.getText().trim() : "";
+        String lat = txtLat.getText() != null ? txtLat.getText().trim() : "";
+        String lon = txtLon.getText() != null ? txtLon.getText().trim() : "";
+
+        if (nombre.isEmpty() || nombre.length() < 3) {
+            showError("El nombre del taller debe tener al menos 3 caracteres.");
+            return false;
+        }
+
+        if (descripcion.isEmpty() || descripcion.length() < 8) {
+            showError("La descripción debe tener al menos 8 caracteres.");
+            return false;
+        }
+
+        if (telefono.isEmpty()) {
+            showError("Debe ingresar un número de teléfono.");
+            return false;
+        }
+
+        if (!validarTelefonoFormato(telefono)) {
+            showError("El teléfono debe tener el formato +569xxxxxxxx (ej: +56912345678).");
+            return false;
+        }
+
+        if (cbComuna.getValue() == null) {
+            showError("Debe seleccionar una comuna.");
+            return false;
+        }
+
+        if (cbUsuario.getValue() == null) {
+            showError("Debe seleccionar un encargado para el taller.");
+            return false;
+        }
+
+        if (direccion.isEmpty()) {
+            showError("Debe ingresar una dirección y obtener su ubicación en el mapa.");
+            return false;
+        }
+
+        if (lat.isEmpty() || lon.isEmpty()) {
+            showError("Debe obtener la dirección en el mapa antes de crear el taller.");
+            return false;
         }
 
         if (imagenFile == null) {
             showError("Debe seleccionar una imagen del taller.");
+            return false;
+        }
+
+        boolean hayServicioSeleccionado = serviciosSeleccionados.values().stream()
+                .anyMatch(BooleanProperty::get);
+
+        if (!hayServicioSeleccionado) {
+            showError("Debe seleccionar al menos un servicio para el taller.");
+            return false;
+        }
+
+        return true;
+    }
+
+    @FXML
+    private void onCrear() {
+
+        // Validar todo el formulario antes de seguir
+        if (!validarFormulario()) {
             return;
         }
 

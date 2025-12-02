@@ -59,7 +59,6 @@ public class AuthService {
 
         } catch (RuntimeException e) {
             clearSession();
-            // mensaje ya viene sanitizado desde ApiClient
             lastError = (e.getMessage() == null || e.getMessage().isBlank())
                     ? "No se pudo iniciar sesión."
                     : e.getMessage();

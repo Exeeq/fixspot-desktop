@@ -32,9 +32,6 @@ public class TicketsController {
         loadTickets();
     }
 
-    /** ==============================
-     * CARGAR TICKETS Y GENERAR TARJETAS
-     * ============================== */
     private void loadTickets() {
         new Thread(() -> {
             try {
@@ -57,9 +54,6 @@ public class TicketsController {
         }).start();
     }
 
-    /** ==============================
-     * CREAR TARJETA VISUAL DE TICKET
-     * ============================== */
     private HBox crearTarjeta(TicketDTO t) {
 
         HBox card = new HBox(20);
@@ -110,9 +104,6 @@ public class TicketsController {
         return card;
     }
 
-    /** ==============================
-     * POPUP DE RESOLVER/RECHAZAR
-     * ============================== */
     private void abrirPopup(TicketDTO ticket) {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -133,9 +124,7 @@ public class TicketsController {
         });
     }
 
-    /** ==============================
-     * ACTUALIZAR ESTADO EN API
-     * ============================== */
+
     private void cambiarEstado(int ticketId, int nuevoEstado) {
 
         new Thread(() -> {

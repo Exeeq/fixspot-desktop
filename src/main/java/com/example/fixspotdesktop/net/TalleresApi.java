@@ -22,9 +22,6 @@ public class TalleresApi {
 
     private static final String BASE = AuthService.API_BASE + "/talleres/";
 
-    /**
-     * Listar todos los talleres.
-     */
     public static List<TallerDTO> listAll() {
         JsonNode n = ApiClient.getJson(BASE, AuthService.getAccessToken());
         List<TallerDTO> out = new ArrayList<>();
@@ -41,16 +38,11 @@ public class TalleresApi {
         return out;
     }
 
-    /**
-     * Crear taller (sin imagen, solo datos básicos).
-     */
+
     public static JsonNode create(Map<String, Object> tallerData) {
         return ApiClient.postJson(BASE, tallerData, AuthService.getAccessToken());
     }
 
-    /**
-     * Crear taller helper simple.
-     */
     public static JsonNode createSimple(
             String nombreTaller,
             String descripcion,
@@ -73,9 +65,7 @@ public class TalleresApi {
         return create(body);
     }
 
-    /**
-     * Editar taller.
-     */
+
     public static JsonNode update(int idTaller, Map<String, String> body, File imagenFile) {
         try {
             String url = BASE + idTaller + "/";
@@ -97,19 +87,16 @@ public class TalleresApi {
                         .build();
 
             } else {
-                // CON IMAGEN: MULTIPART FORM-DATA
                 String boundary = "----FixSpotBoundary" + System.currentTimeMillis();
 
                 var builder = new StringBuilder();
 
-                // Campos normales
                 body.forEach((k, v) -> {
                     builder.append("--").append(boundary).append("\r\n");
                     builder.append("Content-Disposition: form-data; name=\"").append(k).append("\"\r\n\r\n");
                     builder.append(v).append("\r\n");
                 });
 
-                // Parte del archivo
                 builder.append("--").append(boundary).append("\r\n");
                 builder.append("Content-Disposition: form-data; name=\"imagen\"; filename=\"")
                         .append(imagenFile.getName()).append("\"\r\n");
@@ -145,16 +132,10 @@ public class TalleresApi {
         }
     }
 
-    /**
-     * Eliminar taller por ID.
-     */
     public static void deleteById(int idTaller) {
         ApiClient.delete(BASE + idTaller + "/", AuthService.getAccessToken());
     }
 
-    /**
-     * Obtener un taller por su ID.
-     */
     public static TallerDTO getById(int idTaller) {
         JsonNode n = ApiClient.getJson(BASE + idTaller + "/", AuthService.getAccessToken());
 
@@ -181,7 +162,7 @@ public class TalleresApi {
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            return new ObjectMapper().readTree(response.body()); // Devuelve el JSON de la respuesta
+            return new ObjectMapper().readTree(response.body());
         } catch (Exception e) {
             throw new RuntimeException("Error al crear el taller con la imagen: " + e.getMessage());
         }

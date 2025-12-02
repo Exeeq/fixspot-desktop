@@ -79,7 +79,6 @@ public class WorkshopsController {
                             row.getLongitud(),
                             row.getImagen()
                     );
-                    // Pasar el objeto TallerDTO al controlador de edición
                     app.openEditWorkshop(dto);
                 });
 
@@ -129,7 +128,7 @@ public class WorkshopsController {
                 // Guardamos REAL ID del usuario
                 row.setIdUsuario(t.idUsuario());
 
-                // Guardamos el nombre completo del usuario (para mostrarlo)
+                // Guardamos el nombre completo del usuario
                 row.setEncargadoNombre(encargadoName);
 
                 tmp.add(row);
@@ -158,7 +157,7 @@ public class WorkshopsController {
         a.showAndWait();
     }
 
-    // ========== Row Model ==========
+    // Row Model
 
     public static class TallerRow {
         private final IntegerProperty id = new SimpleIntegerProperty();

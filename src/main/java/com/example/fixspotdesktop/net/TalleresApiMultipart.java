@@ -28,11 +28,9 @@ public class TalleresApiMultipart {
                 .header("Authorization", "Bearer " + AuthService.getAccessToken())
                 .header("Content-Type", "multipart/form-data; boundary=" + boundary);
 
-        // Generar cuerpo multipart
         ByteArrayOutputStream body = new ByteArrayOutputStream();
         PrintWriter writer = new PrintWriter(new OutputStreamWriter(body, "UTF-8"), true);
 
-        // Campos normales
         for (var entry : fields.entrySet()) {
             writer.append("--").append(boundary).append("\r\n");
             writer.append("Content-Disposition: form-data; name=\"")

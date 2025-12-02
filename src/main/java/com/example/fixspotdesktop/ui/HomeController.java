@@ -26,7 +26,6 @@ public class HomeController {
     }
 
     private void setupResponsive() {
-        // Cambia a layout vertical si el ancho es menor a 900 px
         rootSplit.widthProperty().addListener((obs, oldW, newW) -> {
             double w = newW == null ? 0 : newW.doubleValue();
             if (w < 900) {
